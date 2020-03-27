@@ -1,0 +1,5 @@
+dependencies:
+  - name: grillade
+    version: 7.1.0
+    src: htmlwidgets/grillade
+    script: grillade.min.js

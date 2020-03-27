@@ -1,0 +1,16 @@
+Package: grillade
+Title: Grid System for the Web
+Version: 0.0.0.9000
+Authors@R: c(
+  person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
+  person("Fanny", "Meyer", role = "aut"),
+  person("Raphaël", "Goetter", role = "cph", comment = "grillade CSS code"),
+  person("Alsacreations", role = "cph", comment = "grillade CSS code"))
+Description: What the package does (one paragraph).
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    htmlwidgets,
+    htmltools,
+    rmarkdown

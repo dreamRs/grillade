@@ -14,3 +14,4 @@ Imports:
     htmlwidgets,
     htmltools,
     rmarkdown
+RoxygenNote: 7.1.0

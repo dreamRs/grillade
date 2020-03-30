@@ -3,22 +3,61 @@
 #' <Add Description>
 #'
 #' @importFrom htmlwidgets createWidget sizingPolicy
+#' @importFrom htmltools tags tagList renderTags
 #'
 #' @export
-grillade <- function(message, width = NULL, height = NULL, elementId = NULL) {
+grillade <- function(..., n_col = NULL, cols_width = NULL, .list = NULL, width = NULL, height = NULL, elementId = NULL) {
+  stopifnot(is.numeric(n_col) | is.null(n_col))
+  widgets <- list(...)
+  if (is.list(.list)) {
+    widgets <- c(widgets, .list)
+  }
+
+  if (!is.null(cols_width))
+    cols_width <- rep_len(cols_width, length(widgets))
+
+  widgets <- lapply(
+    X = seq_along(widgets),
+    FUN = function(i) {
+      tags$div(
+        class = if(!is.null(cols_width)) grid_class(cols_width[i], "col"),
+        class = if (inherits(widgets[[i]], "htmlwidget")) "isWidget",
+        widgets[[i]]
+      )
+    }
+  )
+
+  rendered <- renderTags(tagList(widgets))
 
   x <- list(
-    message = message
+    html = rendered$html,
+    params = list(
+      class = grid_class(n_col, "grid")
+    )
   )
 
   createWidget(
     name = "grillade",
-    x = ,
+    x = x,
     width = width,
     height = height,
     package = "grillade",
+    dependencies = rendered$dependencies,
     elementId = elementId,
-    sizingPolicy = sizingPolicy()
+    sizingPolicy = sizingPolicy(
+      padding = 0,
+      viewer.padding = 0,
+      browser.padding = 0,
+      viewer.fill = TRUE,
+      browser.fill = TRUE
+    )
+  )
+}
+
+
+grillade_html <- function(id, style, class, ...) {
+  tags$section(
+    id = id, class = class, style = style, ...
   )
 }
 

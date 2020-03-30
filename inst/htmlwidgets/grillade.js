@@ -6,21 +6,25 @@ HTMLWidgets.widget({
 
   factory: function(el, width, height) {
 
-    // TODO: define shared variables for this instance
+    var html, classGrid;
 
     return {
 
       renderValue: function(x) {
 
-        // TODO: code to render the widget, e.g.
-        el.innerText = x.message;
+        classGrid = x.params.class;
+        html = x.html;
+        el.classList.add(classGrid);
+        if (classGrid == "autogrid") {
+          el.style.gridTemplateColumns = "repeat(auto-fit, minmax(100px, 1fr))";
+        }
+        //el.style.gridTemplateRows = "repeat(auto-fit, minmax(100px, 1fr))";
+        el.innerHTML = html;
+        HTMLWidgets.staticRender();
 
       },
 
       resize: function(width, height) {
-
-        // TODO: code to re-render the widget with a new size
-
       }
 
     };

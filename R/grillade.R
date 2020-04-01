@@ -16,13 +16,21 @@ grillade <- function(..., n_col = NULL, cols_width = NULL, .list = NULL, width =
   if (!is.null(cols_width))
     cols_width <- rep_len(cols_width, length(widgets))
 
+  # cols_height <- NULL
+  # if (!is.null(n_col) && length(widgets) > n_col) {
+  #   cols_height <- 100 / (((length(widgets) - 1) %/% n_col) + 1)
+  #   cols_height <- paste0("height:", round(cols_height), "%;")
+  # }
+
   widgets <- lapply(
     X = seq_along(widgets),
     FUN = function(i) {
       tags$div(
         class = if(!is.null(cols_width)) grid_class(cols_width[i], "col"),
         class = if (inherits(widgets[[i]], "htmlwidget")) "isWidget",
-        widgets[[i]]
+        style = "min-width: 0; min-height: 0; overflow: hidden; position: relative;",
+        # style = cols_height,
+        tags$div(widgets[[i]], style = "position: absolute; top:0; bottom:0; left:0; right:0;")
       )
     }
   )
@@ -32,7 +40,8 @@ grillade <- function(..., n_col = NULL, cols_width = NULL, .list = NULL, width =
   x <- list(
     html = rendered$html,
     params = list(
-      class = grid_class(n_col, "grid")
+      class = grid_class(n_col, "grid"),
+      style = "min-width: 0; min-height: 0;"
     )
   )
 

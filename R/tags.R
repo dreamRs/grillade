@@ -8,12 +8,3 @@ html_dependency_grillade <- function() {
     stylesheet = "grillade-grid.css"
   )
 }
-
-html_dependency_gridlex <- function() {
-  htmlDependency(
-    name = "gridlex", version = "2.7.1",
-    src = list(file = "htmlwidgets/gridlex"),
-    package = "grillade",
-    stylesheet = "gridlex.min.css"
-  )
-}

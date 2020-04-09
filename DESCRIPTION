@@ -4,8 +4,8 @@ Version: 0.0.0.9000
 Authors@R: c(
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Fanny", "Meyer", role = "aut"),
-  person("Raphaël", "Goetter", role = "cph", comment = "grillade CSS code"),
-  person("Alsacreations", role = "cph", comment = "grillade CSS code"))
+  person("Raphaël", "Goetter", role = "cph", comment = "grillade CSS"),
+  person("Alsacreations", role = "cph", comment = "grillade CSS"))
 Description: What the package does (one paragraph).
 License: GPL-3
 Encoding: UTF-8
@@ -15,4 +15,7 @@ Imports:
     htmltools,
     rmarkdown,
     shiny
+Suggests:
+    ggplot2,
+    apexcharter
 RoxygenNote: 7.1.0

@@ -14,6 +14,7 @@ html_dependency_grillade <- function() {
 
 
 
+
 #' Title
 #'
 #' @param ...
@@ -54,7 +55,4 @@ grillade <- function(..., n_col = NULL, cols_width = NULL, .list = NULL) {
   class(content) <- c("grillade", class(content))
   return(content)
 }
-
-
-
 

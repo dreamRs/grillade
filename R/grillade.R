@@ -6,7 +6,7 @@
 #' @importFrom htmltools tags tagList renderTags
 #'
 #' @export
-grillade <- function(..., n_col = NULL, cols_width = NULL, .list = NULL, width = NULL, height = NULL, elementId = NULL) {
+grilladeW <- function(..., n_col = NULL, cols_width = NULL, .list = NULL, width = NULL, height = NULL, elementId = NULL) {
   stopifnot(is.numeric(n_col) | is.null(n_col))
   widgets <- list(...)
   if (is.list(.list)) {

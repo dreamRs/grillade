@@ -2,6 +2,7 @@
 
 export(grillade)
 export(grilladeOutput)
+export(grilladeW)
 export(renderGrillade)
 importFrom(htmltools,htmlDependency)
 importFrom(htmltools,renderTags)
@@ -11,3 +12,4 @@ importFrom(htmlwidgets,createWidget)
 importFrom(htmlwidgets,shinyRenderWidget)
 importFrom(htmlwidgets,shinyWidgetOutput)
 importFrom(htmlwidgets,sizingPolicy)
+importFrom(shiny,addResourcePath)

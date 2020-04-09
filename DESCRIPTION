@@ -13,5 +13,6 @@ LazyData: true
 Imports: 
     htmlwidgets,
     htmltools,
-    rmarkdown
+    rmarkdown,
+    shiny
 RoxygenNote: 7.1.0

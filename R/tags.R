@@ -42,14 +42,18 @@ grillade <- function(..., n_col = NULL, cols_width = NULL, gutter = FALSE, .list
     X = seq_along(content),
     FUN = function(i) {
       tags$div(
-        class = if(!is.null(cols_width)) grid_class(cols_width[i], "col"),
+        class = col_class(cols_width[i]),
         class = if (inherits(content[[i]], "htmlwidget")) "grillade-Widget",
-        tags$div(content[[i]])
+        if (inherits(content[[i]], "htmlwidget")) {
+          tags$div(content[[i]])
+        } else {
+          content[[i]]
+        }
       )
     }
   )
   content <- tags$div(
-    class = grid_class(n_col, "grid"),
+    class = grid_class(n_col),
     class = gutter_class(gutter),
     content,
     html_dependency_grillade()

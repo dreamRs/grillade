@@ -1,11 +1,14 @@
 
-grid_class <- function(x, class) {
-  if (is.null(x) && identical(class, "grid"))
+grid_class <- function(x) {
+  if (is.null(x))
     return("autogrid")
-  stopifnot(length(x) == 1)
-  if (is.na(x))
+  paste("grid", x, sep = "-")
+}
+
+col_class <- function(x) {
+  if (is.null(x) || is.na(x))
     return(NULL)
-  paste(class, x, sep = "-")
+  paste("col", x, sep = "-")
 }
 
 gutter_class <- function(x) {

@@ -26,7 +26,7 @@ grilladeW <- function(..., n_col = NULL, cols_width = NULL, .list = NULL, width 
     X = seq_along(widgets),
     FUN = function(i) {
       tags$div(
-        class = if(!is.null(cols_width)) grid_class(cols_width[i], "col"),
+        class = col_class(cols_width[i]),
         class = if (inherits(widgets[[i]], "htmlwidget")) "isWidget",
         style = "min-width: 0; min-height: 0; overflow: hidden; position: relative;",
         # style = cols_height,
@@ -40,7 +40,7 @@ grilladeW <- function(..., n_col = NULL, cols_width = NULL, .list = NULL, width 
   x <- list(
     html = rendered$html,
     params = list(
-      class = grid_class(n_col, "grid"),
+      class = grid_class(n_col),
       style = "min-width: 0; min-height: 0;"
     )
   )

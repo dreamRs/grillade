@@ -2,8 +2,9 @@
 #' @importFrom htmltools htmlDependency
 html_dependency_grillade <- function() {
   htmlDependency(
-    name = "grillade", version = "7.1.0",
-    src = list(file = "asssets", href = "grillade"),
+    name = "grillade",
+    version = "7.1.0",
+    src = list(file = "assets", href = "grillade"),
     package = "grillade",
     stylesheet = c(
       "grillade/grillade-grid.css",
@@ -43,7 +44,7 @@ grillade <- function(..., n_col = NULL, cols_width = NULL, gutter = FALSE, .list
     FUN = function(i) {
       tags$div(
         class = col_class(cols_width[i]),
-        class = if (inherits(content[[i]], "htmlwidget")) "grillade-Widget",
+        class = if (inherits(content[[i]], "htmlwidget")) "grillade-widget",
         if (inherits(content[[i]], "htmlwidget")) {
           tags$div(content[[i]])
         } else {
@@ -61,4 +62,35 @@ grillade <- function(..., n_col = NULL, cols_width = NULL, gutter = FALSE, .list
   class(content) <- c("grillade", class(content))
   return(content)
 }
+
+
+
+#' Print method for grillade object
+#'
+#' @param x A \code{\link{grillade}} object.
+#' @param ... Additional arguments.
+#'
+#' @export
+#' @importFrom htmltools tags browsable tagAppendAttributes
+#'
+print.grillade <- function(x, ...) {
+  TAG <- tags$html(
+    style = "width: 100%; height: 100%;",
+    tags$body(
+      style = "width: 100%; height: 100%; margin: 0;",
+      tagAppendAttributes(
+        x,
+        style = "width: 100%; height: 100%;"
+      )
+    )
+  )
+  print(browsable(TAG))
+}
+
+
+
+
+
+
+
 

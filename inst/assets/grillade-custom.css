@@ -1,12 +1,12 @@
 
-.grillade-Widget {
+.grillade-widget {
   min-width: 0;
   min-height: 0;
   overflow: hidden;
   position: relative;
 }
 
-.grillade-Widget > div {
+.grillade-widget > div {
   position: absolute;
   top:0; bottom:0;
   left:0;

@@ -3,3 +3,7 @@ dependencies:
     version: 7.1.0
     src: htmlwidgets/grillade
     stylesheet: grillade-grid.css
+  - name: grillade-custom
+    version: 7.1.0
+    src: assets
+    stylesheet: grillade-custom.css

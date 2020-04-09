@@ -17,6 +17,24 @@ ui <- fluidPage(
     wellPanel("Column 3", style = "text-align: center;"),
     wellPanel("Column 4", style = "text-align: center;"),
     wellPanel("Column 5", style = "text-align: center;")
+  ),
+  tags$b("5 columns with gutter"),
+  grillade(
+    gutter = TRUE,
+    wellPanel("Column 1", style = "text-align: center;"),
+    wellPanel("Column 2", style = "text-align: center;"),
+    wellPanel("Column 3", style = "text-align: center;"),
+    wellPanel("Column 4", style = "text-align: center;"),
+    wellPanel("Column 5", style = "text-align: center;")
+  ),
+  tags$b("5 columns with big gutter"),
+  grillade(
+    gutter = "xl",
+    wellPanel("Column 1", style = "text-align: center;"),
+    wellPanel("Column 2", style = "text-align: center;"),
+    wellPanel("Column 3", style = "text-align: center;"),
+    wellPanel("Column 4", style = "text-align: center;"),
+    wellPanel("Column 5", style = "text-align: center;")
   )
 )
 

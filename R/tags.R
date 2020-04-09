@@ -20,6 +20,7 @@ html_dependency_grillade <- function() {
 #' @param ...
 #' @param n_col
 #' @param cols_width
+#' @param gutter
 #' @param .list
 #'
 #' @return
@@ -28,7 +29,7 @@ html_dependency_grillade <- function() {
 #' @importFrom htmltools tags
 #'
 #' @examples
-grillade <- function(..., n_col = NULL, cols_width = NULL, .list = NULL) {
+grillade <- function(..., n_col = NULL, cols_width = NULL, gutter = FALSE, .list = NULL) {
   stopifnot(is.numeric(n_col) | is.null(n_col))
   content <- list(...)
   if (is.list(.list)) {
@@ -49,6 +50,7 @@ grillade <- function(..., n_col = NULL, cols_width = NULL, .list = NULL) {
   )
   content <- tags$div(
     class = grid_class(n_col, "grid"),
+    class = gutter_class(gutter),
     content,
     html_dependency_grillade()
   )

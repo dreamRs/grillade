@@ -8,4 +8,14 @@ grid_class <- function(x, class) {
   paste(class, x, sep = "-")
 }
 
+gutter_class <- function(x) {
+  if (isTRUE(x))
+    return("has-gutter")
+  if (identical(x, "l"))
+    return("has-gutter-l")
+  if (identical(x, "xl"))
+    return("has-gutter-xl")
+  return(NULL)
+}
+
 

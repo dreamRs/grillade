@@ -4,7 +4,7 @@
 \alias{grillade}
 \title{Title}
 \usage{
-grillade(..., n_col = NULL, cols_width = NULL, .list = NULL)
+grillade(..., n_col = NULL, cols_width = NULL, gutter = FALSE, .list = NULL)
 }
 \arguments{
 \item{.list}{}

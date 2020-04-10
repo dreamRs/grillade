@@ -84,19 +84,19 @@ grillade_html <- function(id, style, class, ...) {
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
 #'
-#' @name grillade-shiny
+#' @name grilladeW-shiny
 #'
 #' @importFrom htmlwidgets shinyWidgetOutput
 #'
 #' @export
-grilladeOutput <- function(outputId, width = "100%", height = "400px"){
+grilladeWOutput <- function(outputId, width = "100%", height = "400px"){
   htmlwidgets::shinyWidgetOutput(outputId, "grillade", width, height, package = "grillade")
 }
 
-#' @rdname grillade-shiny
+#' @rdname grilladeW-shiny
 #' @export
 #' @importFrom htmlwidgets shinyRenderWidget
-renderGrillade <- function(expr, env = parent.frame(), quoted = FALSE) {
+renderGrilladeW <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   htmlwidgets::shinyRenderWidget(expr, grilladeOutput, env, quoted = TRUE)
 }

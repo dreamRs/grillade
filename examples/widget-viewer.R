@@ -11,6 +11,11 @@ a1 <- apex(
 ) %>%
   ax_chart(
     group = "economics", id = "uempmed"
+  ) %>%
+  ax_yaxis(
+    labels = list(
+      minWidth = 15
+    )
   )
 
 a2 <- apex(
@@ -19,7 +24,12 @@ a2 <- apex(
   type = "line"
 ) %>%
   ax_chart(
-    group = "economics", id = "psavert"
+    # group = "economics", id = "psavert"
+  ) %>%
+  ax_yaxis(
+    labels = list(
+      minWidth = 15
+    )
   )
 
 a3 <- apex(
@@ -29,6 +39,11 @@ a3 <- apex(
 ) %>%
   ax_chart(
     group = "economics", id = "unemploy"
+  ) %>%
+  ax_yaxis(
+    labels = list(
+      minWidth = 15
+    )
   )
 
 # Display them

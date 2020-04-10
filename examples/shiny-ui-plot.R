@@ -4,7 +4,7 @@ library(ggplot2)
 library(grillade)
 
 ui <- fluidPage(
-  tags$h2(""),
+  tags$h2("grillade: two columns layout"),
   grillade(
     # n_col = 8,
     cols_width = c(3, 5),

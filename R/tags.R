@@ -16,7 +16,9 @@ html_dependency_grillade <- function() {
 
 
 
-#' Title
+#' @title Create a grillade (grid) of elements
+#'
+#' @description Display plots, htmlwidgets or other HTML components in a grid.
 #'
 #' @param ...
 #' @param n_col
@@ -44,6 +46,7 @@ grillade <- function(..., n_col = NULL, cols_width = NULL, gutter = FALSE, .list
     FUN = function(i) {
       tags$div(
         class = col_class(cols_width[i]),
+        class = "grillade-column",
         class = if (inherits(content[[i]], "htmlwidget")) "grillade-widget",
         if (inherits(content[[i]], "htmlwidget")) {
           tags$div(content[[i]])

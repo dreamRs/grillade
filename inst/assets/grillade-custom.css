@@ -1,7 +1,11 @@
 
-.grillade-widget {
+
+.grillade-column {
   min-width: 0;
   min-height: 0;
+}
+
+.grillade-widget {
   overflow: hidden;
   position: relative;
 }

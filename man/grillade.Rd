@@ -2,7 +2,7 @@
 % Please edit documentation in R/tags.R
 \name{grillade}
 \alias{grillade}
-\title{Title}
+\title{Create a grillade (grid) of elements}
 \usage{
 grillade(..., n_col = NULL, cols_width = NULL, gutter = FALSE, .list = NULL)
 }
@@ -13,5 +13,5 @@ grillade(..., n_col = NULL, cols_width = NULL, gutter = FALSE, .list = NULL)
 
 }
 \description{
-Title
+Display plots, htmlwidgets or other HTML components in a grid.
 }

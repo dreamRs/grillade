@@ -1,5 +1,11 @@
 
+#' Grillade HTML dependency
+#'
+#' @return an \code{\link[htmltools]{htmlDependency}}.
+#' @export
+#'
 #' @importFrom htmltools htmlDependency
+#'
 html_dependency_grillade <- function() {
   htmlDependency(
     name = "grillade",

@@ -21,4 +21,16 @@ gutter_class <- function(x) {
   return(NULL)
 }
 
-
+#' @importFrom shiny renderPlot
+check_list <- function(x) {
+  lapply(
+    X = x,
+    FUN = function(y) {
+      if (inherits(y, "ggplot")) {
+        renderPlot(y)
+      } else {
+        y
+      }
+    }
+  )
+}

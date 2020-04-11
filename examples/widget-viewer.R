@@ -1,3 +1,4 @@
+# Matrix of widgets in viewer ---------------------------------------------
 
 library(apexcharter)
 library(grillade)
@@ -24,7 +25,7 @@ a2 <- apex(
   type = "line"
 ) %>%
   ax_chart(
-    # group = "economics", id = "psavert"
+    group = "economics", id = "psavert"
   ) %>%
   ax_yaxis(
     labels = list(

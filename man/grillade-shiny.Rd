@@ -11,6 +11,7 @@ grilladeOutput(outputId, width = "100\%", ...)
 renderGrillade(
   expr,
   n_col = NULL,
+  max_n_col = NULL,
   cols_width = NULL,
   gutter = FALSE,
   env = parent.frame(),
@@ -29,6 +30,18 @@ string and have \code{'px'} appended.}
 This is useful for providing additional classes for the tag.}
 
 \item{expr}{An expression that generates a \code{\link{grillade}}.}
+
+\item{n_col}{Number of columns, default to \code{NULL}
+and automatically display element with equal size in the grid.}
+
+\item{max_n_col}{Maximum number of columns, used if \code{n_col = NULL}
+and number of elements is unknown.}
+
+\item{cols_width}{Numeric vector, numbers of columns taken by each elements,
+can be a single number or a \code{vector} of same length as elements number.}
+
+\item{gutter}{Add a gutter between columns, can be \code{TRUE}/\code{FALSE},
+or \code{"l"} or \code{"xl"}.}
 
 \item{env}{The environment in which to evaluate \code{expr}.}
 

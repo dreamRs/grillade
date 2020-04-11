@@ -4,14 +4,160 @@
 \alias{grillade}
 \title{Create a grillade (grid) of elements}
 \usage{
-grillade(..., n_col = NULL, cols_width = NULL, gutter = FALSE, .list = NULL)
+grillade(
+  ...,
+  n_col = NULL,
+  max_n_col = NULL,
+  cols_width = NULL,
+  gutter = FALSE,
+  .list = NULL
+)
 }
 \arguments{
-\item{.list}{}
+\item{...}{Elements to include in the \code{grillade}, must be HTML-like outputs.}
+
+\item{n_col}{Number of columns, default to \code{NULL}
+and automatically display element with equal size in the grid.}
+
+\item{max_n_col}{Maximum number of columns, used if \code{n_col = NULL}
+and number of elements is unknown.}
+
+\item{cols_width}{Numeric vector, numbers of columns taken by each elements,
+can be a single number or a \code{vector} of same length as elements number.}
+
+\item{gutter}{Add a gutter between columns, can be \code{TRUE}/\code{FALSE},
+or \code{"l"} or \code{"xl"}.}
+
+\item{.list}{Alternative \code{list} of elements to include in the grid.}
 }
 \value{
-
+HTML tags.
 }
 \description{
 Display plots, htmlwidgets or other HTML components in a grid.
+}
+\examples{
+# Grillade in Shiny UI ----------------------------------------------------
+
+library(grillade)
+library(shiny)
+
+ui <- fluidPage(
+  tags$h2("Grillade in Shiny UI"),
+  tags$b("3 columns"),
+  grillade(
+    wellPanel("Column 1", style = "text-align: center;"),
+    wellPanel("Column 2", style = "text-align: center;"),
+    wellPanel("Column 3", style = "text-align: center;")
+  ),
+  tags$b("5 columns"),
+  grillade(
+    wellPanel("Column 1", style = "text-align: center;"),
+    wellPanel("Column 2", style = "text-align: center;"),
+    wellPanel("Column 3", style = "text-align: center;"),
+    wellPanel("Column 4", style = "text-align: center;"),
+    wellPanel("Column 5", style = "text-align: center;")
+  ),
+  tags$b("5 columns with gutter"),
+  grillade(
+    gutter = TRUE,
+    wellPanel("Column 1", style = "text-align: center;"),
+    wellPanel("Column 2", style = "text-align: center;"),
+    wellPanel("Column 3", style = "text-align: center;"),
+    wellPanel("Column 4", style = "text-align: center;"),
+    wellPanel("Column 5", style = "text-align: center;")
+  ),
+  tags$b("5 columns with big gutter"),
+  grillade(
+    gutter = "xl",
+    wellPanel("Column 1", style = "text-align: center;"),
+    wellPanel("Column 2", style = "text-align: center;"),
+    wellPanel("Column 3", style = "text-align: center;"),
+    wellPanel("Column 4", style = "text-align: center;"),
+    wellPanel("Column 5", style = "text-align: center;")
+  ),
+  tags$b("3 columns"),
+  grillade(
+    n_col = 3,
+    wellPanel("Column 1", style = "text-align: center;"),
+    wellPanel("Column 2", style = "text-align: center;"),
+    wellPanel("Column 3", style = "text-align: center;"),
+    wellPanel("Column 4", style = "text-align: center;"),
+    wellPanel("Column 5", style = "text-align: center;")
+  ),
+  tags$b("4 columns & specific widths"),
+  grillade(
+    n_col = 4, cols_width = c(NA, 3, 2, 2, NA),
+    wellPanel("Column 1", style = "text-align: center;"),
+    wellPanel("Column 2 (take 3)", style = "text-align: center;"),
+    wellPanel("Column 3 (take 2)", style = "text-align: center;"),
+    wellPanel("Column 4 (take 2)", style = "text-align: center;"),
+    wellPanel("Column 5", style = "text-align: center;")
+  )
+)
+
+server <- function(input, output, session) {
+
+}
+
+if (interactive())
+  shinyApp(ui, server)
+
+# Matrix of widgets in viewer ---------------------------------------------
+
+library(apexcharter)
+library(grillade)
+data("economics", package = "ggplot2")
+
+# Create some charts with an htmlwidget
+a1 <- apex(
+  data = tail(economics, 350),
+  mapping = aes(x = date, y = uempmed),
+  type = "line"
+) \%>\%
+  ax_chart(
+    group = "economics", id = "uempmed"
+  ) \%>\%
+  ax_yaxis(
+    labels = list(
+      minWidth = 15
+    )
+  )
+
+a2 <- apex(
+  data = tail(economics, 350),
+  mapping = aes(x = date, y = psavert),
+  type = "line"
+) \%>\%
+  ax_chart(
+    group = "economics", id = "psavert"
+  ) \%>\%
+  ax_yaxis(
+    labels = list(
+      minWidth = 15
+    )
+  )
+
+a3 <- apex(
+  data = tail(economics, 150),
+  mapping = aes(x = date, y = unemploy),
+  type = "line"
+) \%>\%
+  ax_chart(
+    group = "economics", id = "unemploy"
+  ) \%>\%
+  ax_yaxis(
+    labels = list(
+      minWidth = 15
+    )
+  )
+
+# Display them
+grillade(a1, a2)
+
+# Two columns matrix
+grillade(a1, a2, a3, n_col = 2)
+grillade(a1, a2, a3, n_col = 2, cols_width = c(NA, NA, 2))
+
+
 }

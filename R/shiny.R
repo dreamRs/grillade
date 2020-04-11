@@ -47,7 +47,8 @@ grilladeOutput <- function(outputId, width = "100%", ...) {
 #' @importFrom shiny installExprFunction createRenderFunction
 #' @importFrom htmltools renderTags
 renderGrillade <- function(expr,
-                           n_col = NULL, cols_width = NULL, gutter = FALSE,
+                           n_col = NULL, max_n_col = NULL,
+                           cols_width = NULL, gutter = FALSE,
                            env = parent.frame(),
                            quoted = FALSE,
                            outputArgs = list()) {
@@ -59,8 +60,9 @@ renderGrillade <- function(expr,
         return(NULL)
       if (inherits(result, "list")) {
         result <- grillade(
-          .list = result,
+          .list = check_list(result),
           n_col = n_col,
+          max_n_col = max_n_col,
           cols_width = cols_width,
           gutter = gutter
         )

@@ -34,7 +34,7 @@ html_dependency_grillade <- function() {
 #' @return HTML tags.
 #' @export
 #'
-#' @importFrom htmltools tags
+#' @importFrom htmltools tags findDependencies resolveDependencies attachDependencies
 #'
 #' @example examples/shiny-ui.R
 #' @example examples/widget-viewer.R
@@ -62,8 +62,7 @@ grillade <- function(..., n_col = NULL, max_n_col = NULL, cols_width = NULL, gut
         class = if (is_widget(content[[i]])) "grillade-widget",
         if (is_widget(content[[i]])) {
           if (is_shiny()) {
-            # content[[i]]$height <- validateCssUnit(widget_height[i])
-            content[[i]] <- makeRender(content[[i]])(content[[i]])
+            content[[i]] <- makeRender(content[[i]], widget_height[i])
           }
           tags$div(content[[i]])
         } else {
@@ -79,7 +78,7 @@ grillade <- function(..., n_col = NULL, max_n_col = NULL, cols_width = NULL, gut
     class = gutter_class(gutter),
     content
   )
-  content <- htmltools::attachDependencies(
+  content <- attachDependencies(
     x = content,
     value = c(
       deps,
@@ -89,60 +88,6 @@ grillade <- function(..., n_col = NULL, max_n_col = NULL, cols_width = NULL, gut
   class(content) <- c("grillade", class(content))
   return(content)
 }
-
-
-makeRender <- function(widget) {
-  widget <- force(widget)
-  name <- attr(widget, "class")[1]
-  package <- attr(widget, "package")
-  function(expr, env = parent.frame()) {
-    htmlwidgets::shinyRenderWidget(expr, function(outputId, width = "100%", height = "400px"){
-      htmlwidgets::shinyWidgetOutput(
-        outputId = outputId,
-        name = name,
-        width = width,
-        height = height,
-        package = package
-      )
-    }, env, quoted = TRUE)
-  }
-}
-
-anyWidgetOutput <- function(outputId, width = "100%", height = "400px"){
-  htmlwidgets::shinyWidgetOutput(outputId, "grillade-tag", width, height, package = "grillade")
-}
-renderAnyWidget <- function(expr, env = parent.frame(), quoted = FALSE) {
-  if (!quoted) { expr <- substitute(expr) } # force quoted
-  htmlwidgets::shinyRenderWidget(expr, anyWidgetOutput, env, quoted = TRUE)
-}
-
-shinyRenderWidget2 <- function (expr, outputFunction, env, quoted) {
-  func <- shiny::exprToFunction(expr, env, quoted)
-  renderWidget <- function(instance) {
-    # browser()
-    if (!is.null(instance$elementId)) {
-      warning("Ignoring explicitly provided widget ID \"",
-              instance$elementId, "\"; Shiny doesn't use them")
-    }
-    if (!is.null(instance$prepend)) {
-      warning("Ignoring prepended content; prependContent can't be used in a ",
-              "Shiny render call")
-    }
-    if (!is.null(instance$append)) {
-      warning("Ignoring appended content; appendContent can't be used in a ",
-              "Shiny render call")
-    }
-    deps <- .subset2(instance, "dependencies")
-    deps <- lapply(htmltools::resolveDependencies(deps),
-                   shiny::createWebDependency)
-    payload <- c(createPayload(instance), list(deps = deps))
-    toJSON(payload)
-  }
-  shiny::markRenderFunction(outputFunction, function() {
-    renderWidget(func())
-  })
-}
-
 
 
 

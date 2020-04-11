@@ -44,6 +44,21 @@ is_widget <- function(x) {
   inherits(x, "htmlwidget")
 }
 
-
+#' @importFrom htmlwidgets shinyRenderWidget shinyWidgetOutput
+makeRender <- function(widget, height = "400px") {
+  widget <- force(widget)
+  height <- force(height)
+  name <- attr(widget, "class")[1]
+  package <- attr(widget, "package")
+  shinyRenderWidget(widget, function(outputId) {
+    shinyWidgetOutput(
+      outputId = outputId,
+      name = name,
+      width = "100%",
+      height = height,
+      package = package
+    )
+  }, parent.frame(), quoted = TRUE)
+}
 
 

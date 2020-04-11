@@ -18,15 +18,15 @@ server <- function(input, output, session) {
     apex(
       data = data,
       mapping = aes(x = date, y = !!sym(variable)),
-      type = "line", height = "400px"
+      type = "line"
     )
   }
 
   output$charts <- renderGrillade({
-    a1 <- make_chart(economics, "pce")
-    a2 <- make_chart(economics, "psavert")
-    a3 <- make_chart(economics, "uempmed")
-    grillade(a1, a2, a3)
+    chart1 <- make_chart(economics, "pce")
+    chart2 <- make_chart(economics, "psavert")
+    chart3 <- make_chart(economics, "uempmed")
+    grillade(chart1, chart2, chart3)
   })
 
 }

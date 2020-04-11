@@ -10,6 +10,7 @@ grillade(
   max_n_col = NULL,
   cols_width = NULL,
   gutter = FALSE,
+  widget_height = "400px",
   .list = NULL
 )
 }

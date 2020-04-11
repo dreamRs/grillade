@@ -38,7 +38,7 @@ html_dependency_grillade <- function() {
 #'
 #' @example examples/shiny-ui.R
 #' @example examples/widget-viewer.R
-grillade <- function(..., n_col = NULL, max_n_col = NULL, cols_width = NULL, gutter = FALSE, .list = NULL) {
+grillade <- function(..., n_col = NULL, max_n_col = NULL, cols_width = NULL, gutter = FALSE, widget_height = "400px", .list = NULL) {
   stopifnot(is.numeric(n_col) | is.null(n_col))
   content <- list(...)
   if (is.list(.list)) {
@@ -47,14 +47,19 @@ grillade <- function(..., n_col = NULL, max_n_col = NULL, cols_width = NULL, gut
   if (!is.null(cols_width))
     cols_width <- rep_len(cols_width, length(content))
 
+  widget_height <- rep_len(widget_height, length(content))
+
   content <- lapply(
     X = seq_along(content),
     FUN = function(i) {
       tags$div(
         class = col_class(cols_width[i]),
-        class = "grillade-column",
-        class = if (inherits(content[[i]], "htmlwidget")) "grillade-widget",
-        if (inherits(content[[i]], "htmlwidget")) {
+        class = if (!is_shiny()) "grillade-column",
+        style = if (is_shiny() & is_widget(content[[i]])) paste0("height:", widget_height[i], ";"),
+        class = if (is_widget(content[[i]])) "grillade-widget",
+        if (is_widget(content[[i]])) {
+          if (is_shiny())
+            content[[i]]$height <- validateCssUnit(widget_height[i])
           tags$div(content[[i]])
         } else {
           content[[i]]

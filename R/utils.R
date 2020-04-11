@@ -34,3 +34,16 @@ check_list <- function(x) {
     }
   )
 }
+
+#' @importFrom shiny getDefaultReactiveDomain
+is_shiny <- function() {
+  !is.null(getDefaultReactiveDomain())
+}
+
+is_widget <- function(x) {
+  inherits(x, "htmlwidget")
+}
+
+
+
+

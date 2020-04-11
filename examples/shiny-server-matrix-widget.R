@@ -18,7 +18,7 @@ ui <- fluidPage(
         as.Date("1967-07-01"),
         as.Date("2015-04-01")
       ),
-      width = "100%"
+      width = "90%"
     ),
     selectInput(
       inputId = "var",

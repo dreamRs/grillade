@@ -29,7 +29,7 @@ shiny_bindings_grillade <- function() {
 #' @examples
 grilladeOutput <- function(outputId, width = "100%", ...) {
   tags$div(
-    id = outputId, class = "shiny-html-output grillade-output",
+    id = outputId, class = "shiny-html-output shiny-grillade-output",
     style = if (!is.null(width)) paste0("width:", validateCssUnit(width), ";"),
     ...,
     shiny_bindings_grillade()
@@ -44,8 +44,8 @@ grilladeOutput <- function(outputId, width = "100%", ...) {
 #' @rdname grillade-shiny
 #' @export
 #'
-#' @importFrom shiny installExprFunction createRenderFunction
-#' @importFrom htmltools renderTags
+#' @importFrom shiny installExprFunction createRenderFunction createWebDependency
+#' @importFrom htmltools renderTags resolveDependencies
 renderGrillade <- function(expr,
                            n_col = NULL, max_n_col = NULL,
                            cols_width = NULL, gutter = FALSE,
@@ -74,7 +74,11 @@ renderGrillade <- function(expr,
         )
       }
       rendered <- renderTags(result)
-      list(html = rendered$html, deps = rendered$dependencies)
+      deps <- lapply(
+        X = resolveDependencies(rendered$dependencies),
+        FUN = createWebDependency
+      )
+      list(html = rendered$html, deps = deps)
     }, grilladeOutput, outputArgs
   )
 }

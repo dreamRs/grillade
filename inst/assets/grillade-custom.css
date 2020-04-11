@@ -10,7 +10,7 @@
   position: relative;
 }
 
-.grillade-widget > div {
+.viewer-grillade-ouptut > .grillade-widget > div {
   position: absolute;
   top:0; bottom:0;
   left:0;

@@ -29,7 +29,9 @@ can be a single number or a \code{vector} of same length as elements number.}
 \item{gutter}{Add a gutter between columns, can be \code{TRUE}/\code{FALSE},
 or \code{"l"} or \code{"xl"}.}
 
-\item{.list}{Alternative \code{list} of elements to include in the grid.}
+\item{widget_height}{In Shiny, default height to use for \code{htmlwidgets}}
+
+\item{.list}{Alternative \code{list} of elements to include in the grid..}
 }
 \value{
 HTML tags.

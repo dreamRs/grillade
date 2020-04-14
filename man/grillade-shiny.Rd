@@ -15,8 +15,7 @@ renderGrillade(
   cols_width = NULL,
   gutter = FALSE,
   env = parent.frame(),
-  quoted = FALSE,
-  outputArgs = list()
+  quoted = FALSE
 )
 }
 \arguments{

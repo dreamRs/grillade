@@ -1,5 +1,6 @@
 
 #' @importFrom htmltools htmlDependency
+#' @importFrom utils packageVersion
 shiny_bindings_grillade <- function() {
   htmlDependency(
     name = "grillade-bindings",
@@ -44,15 +45,14 @@ grilladeOutput <- function(outputId, width = "100%", ...) {
 #' @rdname grillade-shiny
 #' @export
 #'
-#' @importFrom shiny installExprFunction createRenderFunction createWebDependency
+#' @importFrom shiny exprToFunction createRenderFunction createWebDependency
 #' @importFrom htmltools renderTags resolveDependencies
 renderGrillade <- function(expr,
                            n_col = NULL, max_n_col = NULL,
                            cols_width = NULL, gutter = FALSE,
                            env = parent.frame(),
-                           quoted = FALSE,
-                           outputArgs = list()) {
-  shiny::installExprFunction(expr, "func", env, quoted)
+                           quoted = FALSE) {
+  func <- shiny::exprToFunction(expr, env, quoted)
   shiny::createRenderFunction(
     func = func,
     transform = function(result, shinysession, name, ...) {
@@ -79,6 +79,6 @@ renderGrillade <- function(expr,
         FUN = createWebDependency
       )
       list(html = rendered$html, deps = deps)
-    }, grilladeOutput, outputArgs
+    }, grilladeOutput, list()
   )
 }

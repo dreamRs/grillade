@@ -6,7 +6,7 @@ Authors@R: c(
   person("Fanny", "Meyer", role = "aut"),
   person("Raphaël", "Goetter", role = "cph", comment = "grillade CSS"),
   person("Alsacreations", role = "cph", comment = "grillade CSS"))
-Description: What the package does (one paragraph).
+Description: Grid sytem for 'shiny' applications or 'rmarkdown' document and to create 'htmlwidgets' matrix.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

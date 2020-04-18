@@ -60,7 +60,7 @@ renderGrillade <- function(expr,
         return(NULL)
       if (inherits(result, "list")) {
         result <- grillade(
-          .list = check_list(result),
+          .list = result,
           n_col = n_col,
           max_n_col = max_n_col,
           cols_width = cols_width,

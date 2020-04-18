@@ -35,17 +35,23 @@ html_dependency_grillade <- function() {
 #'  can be a single number or a \code{vector} of same length as elements number.
 #' @param gutter Add a gutter between columns, can be \code{TRUE}/\code{FALSE},
 #'  or \code{"l"} or \code{"xl"}.
-#' @param widget_height In Shiny, default height to use for \code{htmlwidgets}
+#' @param widget_height In Shiny, default height to use for \code{htmlwidgets},
+#'  only used if \code{grillade} is rendered server-side.
 #' @param .list Alternative \code{list} of elements to include in the grid..
 #'
 #' @return HTML tags.
 #' @export
 #'
 #' @importFrom htmltools tags findDependencies resolveDependencies attachDependencies
+#' @importFrom shiny renderPlot
 #'
 #' @example examples/shiny-ui.R
 #' @example examples/widget-viewer.R
-grillade <- function(..., n_col = NULL, max_n_col = NULL, cols_width = NULL, gutter = FALSE, widget_height = "400px", .list = NULL) {
+grillade <- function(...,
+                     n_col = NULL, max_n_col = NULL, cols_width = NULL,
+                     gutter = FALSE,
+                     widget_height = "400px",
+                     .list = NULL) {
   stopifnot(is.numeric(n_col) | is.null(n_col))
   content <- list(...)
   if (is.list(.list)) {
@@ -56,8 +62,12 @@ grillade <- function(..., n_col = NULL, max_n_col = NULL, cols_width = NULL, gut
 
   widget_height <- rep_len(widget_height, length(content))
 
-  deps <- findDependencies(content)
-  deps <- resolveDependencies(deps)
+  if (is_tag(content)) {
+    deps <- findDependencies(content)
+    deps <- resolveDependencies(deps)
+  } else {
+    deps <- NULL
+  }
 
   content <- lapply(
     X = seq_along(content),
@@ -65,7 +75,8 @@ grillade <- function(..., n_col = NULL, max_n_col = NULL, cols_width = NULL, gut
       tags$div(
         class = col_class(cols_width[i]),
         class = if (!is_shiny()) "grillade-column",
-        style = if (is_shiny() & is_widget(content[[i]])) paste0("height:", widget_height[i], ";"),
+        style = if (is_shiny() & is_widget(content[[i]]))
+          paste0("height:", widget_height[i], ";"),
         class = if (is_widget(content[[i]])) "grillade-widget",
         if (is_widget(content[[i]])) {
           if (is_shiny()) {
@@ -73,7 +84,11 @@ grillade <- function(..., n_col = NULL, max_n_col = NULL, cols_width = NULL, gut
           }
           tags$div(content[[i]])
         } else {
-          content[[i]]
+          if (is_ggplot(content[[i]]) & is_shiny()) {
+            renderPlot(content[[i]], quoted = TRUE)
+          } else {
+            content[[i]]
+          }
         }
       )
     }

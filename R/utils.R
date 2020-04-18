@@ -21,19 +21,6 @@ gutter_class <- function(x) {
   return(NULL)
 }
 
-#' @importFrom shiny renderPlot
-check_list <- function(x) {
-  lapply(
-    X = x,
-    FUN = function(y) {
-      if (inherits(y, "ggplot")) {
-        renderPlot(y)
-      } else {
-        y
-      }
-    }
-  )
-}
 
 #' @importFrom shiny getDefaultReactiveDomain
 is_shiny <- function() {
@@ -42,6 +29,14 @@ is_shiny <- function() {
 
 is_widget <- function(x) {
   inherits(x, "htmlwidget")
+}
+
+is_ggplot <- function(x) {
+  inherits(x, "ggplot")
+}
+
+is_tag <- function(x) {
+  inherits(x, c("shiny.tag", "shiny.tag.list"))
 }
 
 #' @importFrom htmlwidgets shinyRenderWidget shinyWidgetOutput

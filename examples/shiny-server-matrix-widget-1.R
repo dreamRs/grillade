@@ -7,9 +7,7 @@ library(grillade)
 
 ui <- fluidPage(
   tags$h2("Htmlwidgets matrix example with grillade"),
-
   grilladeOutput("charts")
-
 )
 
 server <- function(input, output, session) {

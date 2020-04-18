@@ -14,6 +14,7 @@ renderGrillade(
   max_n_col = NULL,
   cols_width = NULL,
   gutter = FALSE,
+  output_height = "400px",
   env = parent.frame(),
   quoted = FALSE
 )
@@ -41,6 +42,9 @@ can be a single number or a \code{vector} of same length as elements number.}
 
 \item{gutter}{Add a gutter between columns, can be \code{TRUE}/\code{FALSE},
 or \code{"l"} or \code{"xl"}.}
+
+\item{output_height}{Height to use for output(s),
+this apply to \code{htmlwidgets} and \code{ggplot2}.}
 
 \item{env}{The environment in which to evaluate \code{expr}.}
 

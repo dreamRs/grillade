@@ -9,9 +9,10 @@ $.extend(grilladeOutputBinding, {
     this.renderError(el, err);
   },
   renderValue: function renderValue(el, data) {
-    Shiny.renderContent(el, data);
-    //Shiny.bindAll(el);
-    //HTMLWidgets.staticRender();
+    Shiny.renderContent(el, data.content);
+    $(el).find(".grillade-widget").height(data.outputHeight);
+    $(el).find(".html-widget").height(data.outputHeight);
+    $(el).find(".shiny-plot-output").height(data.outputHeight);
   }
 });
 Shiny.outputBindings.register(grilladeOutputBinding, "grillade.grilladeOutput");

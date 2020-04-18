@@ -37,8 +37,10 @@ grilladeOutput <- function(outputId, width = "100%", ...) {
   )
 }
 
-#' @inheritParams grillade
 #' @param expr An expression that generates a \code{\link{grillade}}.
+#' @inheritParams grillade
+#' @param output_height Height to use for output(s),
+#'  this apply to \code{htmlwidgets} and \code{ggplot2}.
 #' @param env The environment in which to evaluate \code{expr}.
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
@@ -50,6 +52,7 @@ grilladeOutput <- function(outputId, width = "100%", ...) {
 renderGrillade <- function(expr,
                            n_col = NULL, max_n_col = NULL,
                            cols_width = NULL, gutter = FALSE,
+                           output_height = "400px",
                            env = parent.frame(),
                            quoted = FALSE) {
   func <- shiny::exprToFunction(expr, env, quoted)
@@ -78,7 +81,12 @@ renderGrillade <- function(expr,
         X = resolveDependencies(rendered$dependencies),
         FUN = createWebDependency
       )
-      list(html = rendered$html, deps = deps)
+      list(
+        content = list(
+          html = rendered$html, deps = deps
+        ),
+        outputHeight = output_height
+      )
     }, grilladeOutput, list()
   )
 }

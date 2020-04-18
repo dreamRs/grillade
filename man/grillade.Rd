@@ -10,7 +10,6 @@ grillade(
   max_n_col = NULL,
   cols_width = NULL,
   gutter = FALSE,
-  widget_height = "400px",
   .list = NULL
 )
 }
@@ -28,9 +27,6 @@ can be a single number or a \code{vector} of same length as elements number.}
 
 \item{gutter}{Add a gutter between columns, can be \code{TRUE}/\code{FALSE},
 or \code{"l"} or \code{"xl"}.}
-
-\item{widget_height}{In Shiny, default height to use for \code{htmlwidgets},
-only used if \code{grillade} is rendered server-side.}
 
 \item{.list}{Alternative \code{list} of elements to include in the grid..}
 }

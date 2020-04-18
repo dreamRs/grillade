@@ -35,8 +35,6 @@ html_dependency_grillade <- function() {
 #'  can be a single number or a \code{vector} of same length as elements number.
 #' @param gutter Add a gutter between columns, can be \code{TRUE}/\code{FALSE},
 #'  or \code{"l"} or \code{"xl"}.
-#' @param widget_height In Shiny, default height to use for \code{htmlwidgets},
-#'  only used if \code{grillade} is rendered server-side.
 #' @param .list Alternative \code{list} of elements to include in the grid..
 #'
 #' @return HTML tags.
@@ -50,7 +48,6 @@ html_dependency_grillade <- function() {
 grillade <- function(...,
                      n_col = NULL, max_n_col = NULL, cols_width = NULL,
                      gutter = FALSE,
-                     widget_height = "400px",
                      .list = NULL) {
   stopifnot(is.numeric(n_col) | is.null(n_col))
   content <- list(...)
@@ -59,8 +56,6 @@ grillade <- function(...,
   }
   if (!is.null(cols_width))
     cols_width <- rep_len(cols_width, length(content))
-
-  widget_height <- rep_len(widget_height, length(content))
 
   if (is_tag(content)) {
     deps <- findDependencies(content)
@@ -74,13 +69,13 @@ grillade <- function(...,
     FUN = function(i) {
       tags$div(
         class = col_class(cols_width[i]),
-        class = if (!is_shiny()) "grillade-column",
-        style = if (is_shiny() & is_widget(content[[i]]))
-          paste0("height:", widget_height[i], ";"),
+        class = "grillade-column",
+        # style = if (is_shiny() & is_widget(content[[i]]))
+        #   paste0("height:", widget_height[i], ";"),
         class = if (is_widget(content[[i]])) "grillade-widget",
         if (is_widget(content[[i]])) {
           if (is_shiny()) {
-            content[[i]] <- makeRender(content[[i]], widget_height[i])
+            content[[i]] <- makeRender(content[[i]])
           }
           tags$div(content[[i]])
         } else {

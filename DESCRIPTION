@@ -10,14 +10,15 @@ Description: Grid sytem for 'shiny' applications or 'rmarkdown' document and to 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports:
+Imports: 
     utils,
     htmlwidgets,
     htmltools,
     rmarkdown,
     shiny
-Suggests:
+Suggests: 
     knitr,
     ggplot2,
-    apexcharter
+    apexcharter,
+    testthat
 RoxygenNote: 7.1.0

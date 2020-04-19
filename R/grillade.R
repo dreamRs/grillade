@@ -18,7 +18,7 @@
 #' @return HTML tags.
 #' @export
 #'
-#' @importFrom htmltools tags findDependencies resolveDependencies attachDependencies
+#' @importFrom htmltools tags tagList findDependencies resolveDependencies attachDependencies
 #' @importFrom shiny renderPlot
 #'
 #' @example examples/shiny-ui.R
@@ -39,8 +39,8 @@ grillade <- function(...,
   if (!is.null(cols_width))
     cols_width <- rep_len(cols_width, length(content))
 
-  if (is_tag(content)) {
-    deps <- findDependencies(content)
+  if (is_tag(content) | any(is_widgets(content))) {
+    deps <- findDependencies(tagList(content))
     deps <- resolveDependencies(deps)
   } else {
     deps <- NULL

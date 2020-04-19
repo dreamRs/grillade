@@ -1,8 +1,14 @@
 
-#' Grillade HTML dependency
+#' @title Grillade HTML dependency
+#'
+#' @description Those functions can be used to load
+#'  \href{https://www.knacss.com/doc.html#grids}{grillade} explicitly.
+#'  \code{use_grillade} can be used in a RMakrdown chunk.
 #'
 #' @return an \code{\link[htmltools]{htmlDependency}}.
 #' @export
+#'
+#' @name grillade-dependency
 #'
 #' @importFrom htmltools htmlDependency
 #'
@@ -16,6 +22,18 @@ html_dependency_grillade <- function() {
       "grillade/grillade-grid.css",
       "grillade-custom.css"
     )
+  )
+}
+
+#' @export
+#'
+#' @rdname grillade-dependency
+#'
+#' @importFrom htmltools attachDependencies tags
+use_grillade <- function() {
+  attachDependencies(
+    x = tags$div(),
+    value = html_dependency_grillade()
   )
 }
 
@@ -45,7 +63,7 @@ html_dependency_grillade <- function() {
 #' @importFrom shiny renderPlot
 #'
 #' @example examples/shiny-ui.R
-#' @example examples/widget-viewer.R
+#' @example examples/viewer-widget.R
 grillade <- function(...,
                      n_col = NULL,
                      max_n_col = NULL,

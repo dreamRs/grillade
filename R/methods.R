@@ -27,7 +27,6 @@ print.grillade <- function(x, ...) {
 knit_print.grillade <- function(x, ..., options = NULL) {
   TAG <- tagAppendAttributes(
     build_grillade(x, knitr = TRUE),
-    # style = "min-height: 400px",
     class = "knitr-grillade-ouptut"
   )
   class(TAG) <- setdiff(class(TAG), "grillade")

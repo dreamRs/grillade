@@ -47,7 +47,9 @@ html_dependency_grillade <- function() {
 #' @example examples/shiny-ui.R
 #' @example examples/widget-viewer.R
 grillade <- function(...,
-                     n_col = NULL, max_n_col = NULL, cols_width = NULL,
+                     n_col = NULL,
+                     max_n_col = NULL,
+                     cols_width = NULL,
                      gutter = FALSE,
                      .list = NULL,
                      width = NULL,
@@ -67,85 +69,20 @@ grillade <- function(...,
     deps <- NULL
   }
 
-  content <- lapply(
-    X = seq_along(content),
-    FUN = function(i) {
-      tags$div(
-        class = col_class(cols_width[i]),
-        class = "grillade-column",
-        class = paste0("grillade-", i),
-        class = if (is_widget(content[[i]])) "grillade-widget",
-        if (is_widget(content[[i]])) {
-          if (is_shiny()) {
-            content[[i]] <- makeRender(content[[i]])
-          }
-          tags$div(content[[i]])
-        } else {
-          if (is_ggplot(content[[i]]) & is_shiny()) {
-            renderPlot(content[[i]], quoted = TRUE)
-          } else {
-            content[[i]]
-          }
-        }
-      )
-    }
+  grll <- list(
+    content = content,
+    dependencies = deps,
+    n_col = n_col,
+    max_n_col = max_n_col,
+    cols_width = cols_width,
+    gutter = gutter,
+    width = width, height = height
   )
-  if (!is.null(max_n_col) && length(content) > max_n_col)
-    n_col <- max_n_col
-  content <- tags$div(
-    class = grid_class(n_col),
-    class = gutter_class(gutter),
-    style = if (!is.null(width)) paste0("width:", validateCssUnit(width), ";"),
-    style = if (!is.null(height)) paste0("height:", validateCssUnit(height), ";"),
-    content
-  )
-  content <- attachDependencies(
-    x = content,
-    value = c(
-      deps,
-      list(html_dependency_grillade())
-    )
-  )
-  class(content) <- c("grillade", class(content))
-  return(content)
+  class(grll) <- "grillade"
+  return(grll)
 }
 
 
-
-#' Print method for grillade object
-#'
-#' @param x A \code{\link{grillade}} object.
-#' @param ... Additional arguments.
-#'
-#' @export
-#' @importFrom htmltools tags browsable tagAppendAttributes
-#'
-print.grillade <- function(x, ...) {
-  TAG <- tags$html(
-    style = "width: 100%; height: 100%;",
-    tags$body(
-      style = "width: 100%; height: 100%; margin: 0;",
-      tagAppendAttributes(
-        x,
-        style = "width: 100%; height: 100%;",
-        class = "viewer-grillade-ouptut"
-      )
-    )
-  )
-  print(browsable(TAG))
-}
-
-
-
-knit_print.grillade <- function(x, ..., options = NULL) {
-  TAG <- tagAppendAttributes(
-    x,
-    # style = "min-height: 400px",
-    class = "knitr-grillade-ouptut"
-  )
-  class(TAG) <- setdiff(class(TAG), "grillade")
-  knitr::knit_print(browsable(TAG), options = options, ...)
-}
 
 
 

@@ -39,6 +39,25 @@ is_tag <- function(x) {
   inherits(x, c("shiny.tag", "shiny.tag.list"))
 }
 
+is_widgets <- function(x) {
+  vapply(
+    X = x,
+    FUN = is_widget,
+    FUN.VALUE = logical(1),
+    USE.NAMES = FALSE
+  )
+}
+
+is_ggplots <- function(x) {
+  vapply(
+    X = x,
+    FUN = is_ggplot,
+    FUN.VALUE = logical(1),
+    USE.NAMES = FALSE
+  )
+}
+
+
 #' @importFrom htmlwidgets shinyRenderWidget shinyWidgetOutput
 makeRender <- function(widget, height = "400px") {
   widget <- force(widget)
@@ -58,21 +77,24 @@ makeRender <- function(widget, height = "400px") {
 
 
 
-get_height <- function(x) {
+get_height <- function(x, knitr = FALSE) {
   if (is_widget(x)) {
     if (!is.null(x$height))
       return(x$height)
-    # if (!is.null(x$sizingPolicy$defaultHeight))
-    #   return(x$sizingPolicy$defaultHeight)
-    if (!is.null(x$sizingPolicy$knitr$defaultHeight))
+    if (isTRUE(knitr) & !is.null(x$sizingPolicy$knitr$defaultHeight))
       return(x$sizingPolicy$knitr$defaultHeight)
     return(NA_character_)
   } else {
     return(NA_character_)
   }
 }
-get_heights <- function(x) {
-  vapply(X = x, FUN = get_height, FUN.VALUE = character(1), USE.NAMES = FALSE)
+get_heights <- function(x, knitr = FALSE) {
+  vapply(
+    X = x,
+    FUN = get_height, knitr = knitr,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE
+  )
 }
 
 

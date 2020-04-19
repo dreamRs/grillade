@@ -43,8 +43,8 @@ ui <- fluidPage(
     wellPanel("Column 1", style = "text-align: center;"),
     wellPanel("Column 2", style = "text-align: center;"),
     wellPanel("Column 3", style = "text-align: center;"),
-    wellPanel("Column 4", style = "text-align: center;"),
-    wellPanel("Column 5", style = "text-align: center;")
+    wellPanel("Column 4 (will be on a 2nd row)", style = "text-align: center;"),
+    wellPanel("Column 5 (will be on a 2nd row)", style = "text-align: center;")
   ),
   tags$b("4 columns & specific widths"),
   grillade(

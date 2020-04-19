@@ -1,0 +1,108 @@
+---
+title: "Grillade with blocks"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(grillade)
+```
+
+
+Loading grillade HTML dependencies :
+
+```{r}
+htmltools::attachDependencies(
+  htmltools::tags$div(),
+  html_dependency_grillade()
+)
+```
+
+
+
+## Using autogrid
+
+Two plot side-by-side :
+
+:::: {.autogrid}
+
+::: {}
+
+First plot:
+
+```{r}
+ggplot(mpg) + geom_bar(aes(manufacturer))
+```
+
+:::
+
+::: {}
+
+Second plot on the left:
+
+```{r}
+ggplot(mpg) + geom_bar(aes(class))
+```
+
+:::
+
+::::
+
+
+
+Add a gutter between columns :
+
+:::: {.autogrid .has-gutter}
+
+::: {}
+
+First plot:
+
+```{r}
+ggplot(mpg) + geom_bar(aes(manufacturer))
+```
+
+:::
+
+::: {}
+
+Second plot on the left:
+
+```{r}
+ggplot(mpg) + geom_bar(aes(class))
+```
+
+:::
+
+::::
+
+
+
+## Using custom columns
+
+:::: {.grid-3 .has-gutter}
+
+::: {.col-2}
+
+Figure
+
+```{r}
+ggplot(mpg) + geom_bar(aes(manufacturer))
+```
+
+:::
+
+::: {}
+
+Some text side-by-side to the figure
+
+:::
+
+::::
+
+
+
+
+
+

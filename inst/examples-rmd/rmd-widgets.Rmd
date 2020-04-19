@@ -34,11 +34,14 @@ grillade(a1, a2, height = "400px")
 ## Specify number of columns and width
 
 ```{r}
-grillade(a1, tags$div(
-  "Here some text, displayed into a column on the side of the chart.",
-  tags$br(),
-  "You can write text using", tags$b("HTML tags")
-), n_col = 8, cols_width = c(6, 2))
+grillade(
+  a1, 
+  tags$div(
+    "Here some text, displayed into a column on the side of the chart.",
+    tags$br(),
+    "You can write text using", tags$b("HTML tags")
+  ), n_col = 8, cols_width = c(6, 2)
+)
 ```
 
 

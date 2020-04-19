@@ -61,7 +61,7 @@ renderGrillade <- function(expr,
     transform = function(result, shinysession, name, ...) {
       if (is.null(result) || length(result) == 0)
         return(NULL)
-      if (inherits(result, "list")) {
+      if (identical(class(result), "list")) {
         result <- grillade(
           .list = result,
           n_col = n_col,
@@ -76,6 +76,7 @@ renderGrillade <- function(expr,
           call. = FALSE
         )
       }
+      result <- build_grillade(result, shiny = TRUE, default_height = output_height)
       rendered <- renderTags(result)
       deps <- lapply(
         X = resolveDependencies(rendered$dependencies),

@@ -35,7 +35,8 @@ html_dependency_grillade <- function() {
 #'  can be a single number or a \code{vector} of same length as elements number.
 #' @param gutter Add a gutter between columns, can be \code{TRUE}/\code{FALSE},
 #'  or \code{"l"} or \code{"xl"}.
-#' @param .list Alternative \code{list} of elements to include in the grid..
+#' @param .list Alternative \code{list} of elements to include in the grid.
+#' @param width,height Give explicit width and height to the \code{grillade}.
 #'
 #' @return HTML tags.
 #' @export
@@ -48,7 +49,9 @@ html_dependency_grillade <- function() {
 grillade <- function(...,
                      n_col = NULL, max_n_col = NULL, cols_width = NULL,
                      gutter = FALSE,
-                     .list = NULL) {
+                     .list = NULL,
+                     width = NULL,
+                     height = NULL) {
   stopifnot(is.numeric(n_col) | is.null(n_col))
   content <- list(...)
   if (is.list(.list)) {
@@ -70,8 +73,7 @@ grillade <- function(...,
       tags$div(
         class = col_class(cols_width[i]),
         class = "grillade-column",
-        # style = if (is_shiny() & is_widget(content[[i]]))
-        #   paste0("height:", widget_height[i], ";"),
+        class = paste0("grillade-", i),
         class = if (is_widget(content[[i]])) "grillade-widget",
         if (is_widget(content[[i]])) {
           if (is_shiny()) {
@@ -93,6 +95,8 @@ grillade <- function(...,
   content <- tags$div(
     class = grid_class(n_col),
     class = gutter_class(gutter),
+    style = if (!is.null(width)) paste0("width:", validateCssUnit(width), ";"),
+    style = if (!is.null(height)) paste0("height:", validateCssUnit(height), ";"),
     content
   )
   content <- attachDependencies(
@@ -133,7 +137,15 @@ print.grillade <- function(x, ...) {
 
 
 
-
+knit_print.grillade <- function(x, ..., options = NULL) {
+  TAG <- tagAppendAttributes(
+    x,
+    # style = "min-height: 400px",
+    class = "knitr-grillade-ouptut"
+  )
+  class(TAG) <- setdiff(class(TAG), "grillade")
+  knitr::knit_print(browsable(TAG), options = options, ...)
+}
 
 
 

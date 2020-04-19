@@ -57,3 +57,50 @@ makeRender <- function(widget, height = "400px") {
 }
 
 
+
+get_height <- function(x) {
+  if (is_widget(x)) {
+    if (!is.null(x$height))
+      return(x$height)
+    # if (!is.null(x$sizingPolicy$defaultHeight))
+    #   return(x$sizingPolicy$defaultHeight)
+    if (!is.null(x$sizingPolicy$knitr$defaultHeight))
+      return(x$sizingPolicy$knitr$defaultHeight)
+    return(NA_character_)
+  } else {
+    return(NA_character_)
+  }
+}
+get_heights <- function(x) {
+  vapply(X = x, FUN = get_height, FUN.VALUE = character(1), USE.NAMES = FALSE)
+}
+
+
+
+
+# From vignette('knit_print', package = 'knitr')
+# and https://github.com/rstudio/htmltools/pull/108/files
+
+register_s3_method <- function(pkg, generic, class, fun = NULL) {
+  stopifnot(is.character(pkg), length(pkg) == 1)
+  stopifnot(is.character(generic), length(generic) == 1)
+  stopifnot(is.character(class), length(class) == 1)
+
+  if (is.null(fun)) {
+    fun <- get(paste0(generic, ".", class), envir = parent.frame())
+  } else {
+    stopifnot(is.function(fun))
+  }
+
+  if (pkg %in% loadedNamespaces()) {
+    registerS3method(generic, class, fun, envir = asNamespace(pkg))
+  }
+
+  # Always register hook in case package is later unloaded & reloaded
+  setHook(
+    packageEvent(pkg, "onLoad"),
+    function(...) {
+      registerS3method(generic, class, fun, envir = asNamespace(pkg))
+    }
+  )
+}

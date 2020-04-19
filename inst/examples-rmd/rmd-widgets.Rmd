@@ -1,0 +1,60 @@
+---
+title: "Grillade with htmlwidgets"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(apexcharter)
+library(grillade)
+library(htmltools)
+```
+
+
+## Display 2 htmlwidgets side-by-side
+
+
+```{r}
+a1 <- apex(
+  data = tail(economics, 350),
+  mapping = aes(x = date, y = uempmed),
+  type = "line"
+)
+a2 <- apex(
+  data = tail(economics, 350),
+  mapping = aes(x = date, y = psavert),
+  type = "line"
+)
+
+grillade(a1, a2, height = "400px")
+```
+
+
+## Specify number of columns and width
+
+```{r}
+grillade(a1, tags$div(
+  "Here some text, displayed into a column on the side of the chart.",
+  tags$br(),
+  "You can write text using", tags$b("HTML tags")
+), n_col = 8, cols_width = c(6, 2))
+```
+
+
+## Two rows
+
+
+```{r}
+a3 <- apex(
+  data = tail(economics, 150),
+  mapping = aes(x = date, y = unemploy),
+  type = "area"
+)
+
+grillade(a1, a2, a3, n_col = 2, cols_width = c(NA, NA, 2))
+```
+
+
+
+

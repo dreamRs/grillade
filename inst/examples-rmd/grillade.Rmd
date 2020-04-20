@@ -1,0 +1,86 @@
+---
+output: grillade:::html_grillade
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+library(apexcharter)
+library(grillade)
+
+spark_data <- data.frame(
+  date = Sys.Date() + 1:20,
+  var1 = round(rnorm(20, 50, 10)),
+  var2 = round(rnorm(20, 50, 10)),
+  var3 = round(rnorm(20, 50, 10)),
+  var4 = round(rnorm(20, 50, 10)),
+  var5= round(rnorm(20, 50, 10))
+)
+```
+
+
+# Example of grillade document
+
+:::: {.autogrid .has-gutter}
+
+
+::: {}
+```{r}
+spark_box(
+  data = spark_data[, c(1, 2)],
+  title = mean(spark_data$var1), 
+  subtitle = "Variable 1"
+)
+```
+:::
+
+::: {}
+```{r}
+spark_box(
+  data = spark_data[, c(1, 3)],
+  title = mean(spark_data$var2), 
+  subtitle = "Variable 2"
+)
+```
+:::
+
+::: {}
+```{r}
+spark_box(
+  data = spark_data[, c(1, 4)],
+  title = mean(spark_data$var3), 
+  subtitle = "Variable 3"
+)
+```
+:::
+
+::: {}
+```{r}
+spark_box(
+  data = spark_data[, c(1, 5)],
+  title = mean(spark_data$var4), 
+  subtitle = "Variable 4", 
+  type = "line",
+  color = "#FFF", background = "#2E93fA",
+  title_style = list(color = "#FFF"),
+  subtitle_style = list(color = "#FFF")
+)
+```
+:::
+
+::: {}
+```{r}
+spark_box(
+  data = spark_data[, c(1, 6)],
+  title = mean(spark_data$var5), 
+  subtitle = "Variable 5", 
+  type = "line",
+  color = "#FFF", background = "#2E93fA",
+  title_style = list(color = "#FFF"),
+  subtitle_style = list(color = "#FFF")
+)
+```
+:::
+
+::::
+

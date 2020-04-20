@@ -13,10 +13,7 @@ library(grillade)
 Loading grillade HTML dependencies :
 
 ```{r}
-htmltools::attachDependencies(
-  htmltools::tags$div(),
-  html_dependency_grillade()
-)
+use_grillade()
 ```
 
 

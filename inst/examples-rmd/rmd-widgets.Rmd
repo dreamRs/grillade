@@ -19,7 +19,7 @@ library(htmltools)
 a1 <- apex(
   data = tail(economics, 350),
   mapping = aes(x = date, y = uempmed),
-  type = "line"
+  type = "line", height = "400px"
 )
 a2 <- apex(
   data = tail(economics, 350),
@@ -27,7 +27,7 @@ a2 <- apex(
   type = "line"
 )
 
-grillade(a1, a2, height = "400px")
+grillade(a1, a2)
 ```
 
 

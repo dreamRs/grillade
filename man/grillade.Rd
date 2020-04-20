@@ -10,9 +10,7 @@ grillade(
   max_n_col = NULL,
   cols_width = NULL,
   gutter = FALSE,
-  .list = NULL,
-  width = NULL,
-  height = NULL
+  .list = NULL
 )
 }
 \arguments{
@@ -31,11 +29,9 @@ can be a single number or a \code{vector} of same length as elements number.}
 or \code{"l"} or \code{"xl"}.}
 
 \item{.list}{Alternative \code{list} of elements to include in the grid.}
-
-\item{width, height}{Give explicit width and height to the \code{grillade}.}
 }
 \value{
-HTML tags.
+A \code{grillade} object that can be used in the console, in shiny application and in markdown document.
 }
 \description{
 Display plots, htmlwidgets or other HTML components in a grid.
@@ -97,6 +93,17 @@ ui <- fluidPage(
     wellPanel("Column 3 (take 2)", style = "text-align: center;"),
     wellPanel("Column 4 (take 2)", style = "text-align: center;"),
     wellPanel("Column 5", style = "text-align: center;")
+  ),
+  tags$b("Nested"),
+  grillade(
+    grillade(
+      wellPanel("Column A 1", style = "text-align: center;"),
+      wellPanel("Column A 2", style = "text-align: center;")
+    ),
+    grillade(
+      wellPanel("Column B 1", style = "text-align: center;"),
+      wellPanel("Column B 2", style = "text-align: center;")
+    )
   )
 )
 

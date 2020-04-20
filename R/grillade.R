@@ -13,9 +13,8 @@
 #' @param gutter Add a gutter between columns, can be \code{TRUE}/\code{FALSE},
 #'  or \code{"l"} or \code{"xl"}.
 #' @param .list Alternative \code{list} of elements to include in the grid.
-#' @param width,height Give explicit width and height to the \code{grillade}.
 #'
-#' @return HTML tags.
+#' @return A \code{grillade} object that can be used in the console, in shiny application and in markdown document.
 #' @export
 #'
 #' @importFrom htmltools tags tagList findDependencies resolveDependencies attachDependencies
@@ -28,9 +27,7 @@ grillade <- function(...,
                      max_n_col = NULL,
                      cols_width = NULL,
                      gutter = FALSE,
-                     .list = NULL,
-                     width = NULL,
-                     height = NULL) {
+                     .list = NULL) {
   stopifnot(is.numeric(n_col) | is.null(n_col))
   content <- list(...)
   if (is.list(.list)) {
@@ -52,8 +49,7 @@ grillade <- function(...,
     n_col = n_col,
     max_n_col = max_n_col,
     cols_width = cols_width,
-    gutter = gutter,
-    width = width, height = height
+    gutter = gutter
   )
   class(grll) <- "grillade"
   return(grll)

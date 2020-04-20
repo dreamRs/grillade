@@ -7,6 +7,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(ggplot2)
 library(apexcharter)
 library(grillade)
+library(leaflet)
 
 spark_data <- data.frame(
   date = Sys.Date() + 1:20,
@@ -21,8 +22,9 @@ spark_data <- data.frame(
 
 # Example of grillade document
 
-:::: {.autogrid .has-gutter}
+### 5 columns with autogrid in plain markdown
 
+:::: {.autogrid .has-gutter}
 
 ::: {}
 ```{r}
@@ -83,4 +85,55 @@ spark_box(
 :::
 
 ::::
+
+
+### Works with gpplot figure and leaflet htmlwidget and custom grid
+
+:::: {.grid-5 .has-gutter}
+
+::: {.col-2}
+
+```{r}
+ggplot(mpg) + geom_bar(aes(manufacturer))
+```
+
+:::
+
+
+::: {.col-3}
+
+```{r}
+leaflet(width = "100%") %>%
+  addTiles() %>% 
+  addMarkers(lng=174.768, lat=-36.852, popup="The birthplace of R")
+```
+
+:::
+
+::::
+
+
+### Use grillade() also works
+
+```{r}
+a1 <- apex(
+  data = tail(economics, 350),
+  mapping = aes(x = date, y = uempmed),
+  type = "line", height = "400px"
+)
+a2 <- apex(
+  data = tail(economics, 350),
+  mapping = aes(x = date, y = psavert),
+  type = "line"
+)
+
+grillade(a1, a2)
+```
+
+
+
+
+
+
+
 

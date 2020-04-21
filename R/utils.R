@@ -11,6 +11,12 @@ col_class <- function(x) {
   paste("col", x, sep = "-")
 }
 
+row_class <- function(x) {
+  if (is.null(x) || is.na(x))
+    return(NULL)
+  paste("row", x, sep = "-")
+}
+
 gutter_class <- function(x) {
   if (isTRUE(x))
     return("has-gutter")
@@ -30,6 +36,19 @@ is_shiny <- function() {
 is_widget <- function(x) {
   inherits(x, "htmlwidget")
 }
+# extract2 <- function(x, nm) {
+#   `[[`(x, nm)
+# }
+# @importFrom htmltools findDependencies
+# is_widget <- function(x) {
+#   deps <- vapply(
+#     X = findDependencies(x),
+#     FUN = extract2, nm = "name",
+#     FUN.VALUE = character(1)
+#   )
+#   isTRUE("htmlwidgets" %in% deps)
+# }
+
 
 is_ggplot <- function(x) {
   inherits(x, "ggplot")

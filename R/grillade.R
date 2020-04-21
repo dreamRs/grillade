@@ -56,6 +56,58 @@ grillade <- function(...,
 }
 
 
+
+#' Grillade column
+#'
+#' @param ... Content of the column, named arguments will be used as tag attributes.
+#' @param col_width Column width.
+#' @param row_height Row height.
+#'
+#' @return An element that can be used inside \code{\link{grillade}}.
+#' @export
+#'
+#' @example example/ex-col.R
+col <- function(..., col_width = NULL, row_height = NULL) {
+  content <- list(...)
+  if (any(nzchar(names(content)))) {
+    attributes <- content[nzchar(names(content))]
+    content[nzchar(names(content))] <- NULL
+  } else {
+    attributes <- NULL
+  }
+  coltag <- build_col(content = content, col_width = col_width, row_height = row_height)
+  coltag$attribs <- c(coltag$attribs, attributes)
+  class(coltag) <- c(class(coltag), "grillade-column")
+  return(coltag)
+}
+
+
+
+build_col <- function(content, col_width = NULL, row_height = NULL, css_height = NULL, shiny = FALSE) {
+  tags$div(
+    class = col_class(col_width),
+    class = row_class(row_height),
+    class = "grillade-column",
+    class = if (is_widget(content)) "grillade-widget",
+    style = if (!is.null(css_height) && !is.na(css_height))
+      paste0("height:", css_height, ";"),
+    if (is_widget(content)) {
+      if (isTRUE(shiny)) {
+        content <- makeRender(content, css_height)
+      }
+      tags$div(content)
+    } else {
+      if (is_ggplot(content) & isTRUE(shiny)) {
+        renderPlot(content, quoted = TRUE)
+      } else {
+        content
+      }
+    }
+  )
+}
+
+
+#' @importFrom htmltools tags tagAppendAttributes attachDependencies
 build_grillade <- function(x, knitr = FALSE, shiny = FALSE, default_height = "400px") {
   content <- x$content
 
@@ -70,26 +122,17 @@ build_grillade <- function(x, knitr = FALSE, shiny = FALSE, default_height = "40
   content <- lapply(
     X = seq_along(content),
     FUN = function(i) {
-      tags$div(
-        class = col_class(x$cols_width[i]),
-        class = "grillade-column",
-        class = paste0("grillade-", i),
-        class = if (is_widget(content[[i]])) "grillade-widget",
-        style = if (!is.na(heights[i]))
-          paste0("height:", heights[i], ";"),
-        if (is_widget(content[[i]])) {
-          if (isTRUE(shiny)) {
-            content[[i]] <- makeRender(content[[i]], heights[i])
-          }
-          tags$div(content[[i]])
-        } else {
-          if (is_ggplot(content[[i]]) & isTRUE(shiny)) {
-            renderPlot(content[[i]], quoted = TRUE)
-          } else {
-            content[[i]]
-          }
-        }
-      )
+      if (inherits(content[[i]], "grillade-column")) {
+        coltag <- content[[i]]
+      } else {
+        coltag <- build_col(
+          content = content[[i]],
+          col_width = x$cols_width[i],
+          css_height =  heights[i],
+          shiny = shiny
+        )
+      }
+      tagAppendAttributes(coltag, class = paste0("grillade-", i))
     }
   )
   if (!is.null(x$max_n_col) && length(content) > x$max_n_col) {

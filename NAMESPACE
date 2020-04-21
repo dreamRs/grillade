@@ -2,6 +2,7 @@
 
 S3method(as.tags,grillade)
 S3method(print,grillade)
+export(col)
 export(grillade)
 export(grilladeOutput)
 export(html_dependency_grillade)

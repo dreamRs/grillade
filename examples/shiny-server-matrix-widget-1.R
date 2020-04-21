@@ -1,9 +1,9 @@
-# Matrix of htmlwidgets ---------------------------------------------------
+# Matrix of htmlwidgets ---------------------------------------
 
 library(shiny)
-library(ggplot2)
 library(apexcharter)
 library(grillade)
+data("economics", package = "ggplot2")
 
 ui <- fluidPage(
   tags$h2("Htmlwidgets matrix example with grillade"),
@@ -24,10 +24,12 @@ server <- function(input, output, session) {
     chart1 <- make_chart(economics, "pce")
     chart2 <- make_chart(economics, "psavert")
     chart3 <- make_chart(economics, "uempmed")
-    # grillade(renderApexchart(chart1), renderApexchart(chart2), renderApexchart(chart3))
     grillade(chart1, chart2, chart3)
   })
 
 }
 
-shinyApp(ui, server)
+if (interactive())
+  shinyApp(ui, server)
+
+

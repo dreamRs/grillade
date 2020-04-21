@@ -1,4 +1,4 @@
-# Generate a matrix of plots from server ----------------------------------
+# Generate a matrix of plots from server ----------------------
 
 library(grillade)
 library(shiny)
@@ -27,4 +27,7 @@ server <- function(input, output, session) {
 
 }
 
-shinyApp(ui, server)
+if (interactive())
+  shinyApp(ui, server)
+
+

@@ -1,6 +1,6 @@
 # grillade
 
-> Grid sytem for shiny apps or rmarkdown document and to create htmlwidgets matrix. R interface for grillade from [KNACSS](https://github.com/alsacreations/KNACSS).
+> Grid sytem for shiny apps or rmarkdown document, mainly to create htmlwidgets matrix. R interface for grillade from [KNACSS](https://github.com/alsacreations/KNACSS).
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)

@@ -27,7 +27,9 @@ shiny_bindings_grillade <- function() {
 #'
 #' @name grillade-shiny
 #'
-#' @examples
+#' @example examples/shiny-server.R
+#' @example examples/shiny-server-matrix-widget-1.R
+#' @example examples/shiny-server-matrix-plot.R
 grilladeOutput <- function(outputId, width = "100%", ...) {
   tags$div(
     id = outputId, class = "shiny-html-output shiny-grillade-output",

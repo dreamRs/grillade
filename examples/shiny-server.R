@@ -1,4 +1,4 @@
-# Generate a grillade from the server -------------------------------------
+# Generate a grillade from the server -------------------------
 
 library(grillade)
 library(shiny)
@@ -29,4 +29,7 @@ server <- function(input, output, session) {
 
 }
 
-shinyApp(ui, server)
+if (interactive())
+  shinyApp(ui, server)
+
+

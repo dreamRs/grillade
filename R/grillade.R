@@ -66,7 +66,7 @@ grillade <- function(...,
 #' @return An element that can be used inside \code{\link{grillade}}.
 #' @export
 #'
-#' @example example/ex-col.R
+#' @example examples/ex-col.R
 col <- function(..., col_width = NULL, row_height = NULL) {
   content <- list(...)
   if (any(nzchar(names(content)))) {

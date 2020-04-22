@@ -1,0 +1,229 @@
+---
+title: "grillade"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{grillade}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(grillade)
+```
+
+
+Create responsive matrix of interactive charts :
+
+```{r}
+library(apexcharter)
+data(economics, package = "ggplot2")
+eco <- tail(economics, 350)
+
+grillade(
+  n_col = 2,
+  knack(
+    cols = 1, cols_sm = "all",
+    apex(eco, aes(x = date, y = uempmed), "line", height = "350px")
+  ),
+  knack(
+    cols = 1, cols_sm = "all",
+    apex(eco, aes(x = date, y = psavert), "line", height = "350px")
+  )
+)
+```
+
+
+
+
+
+
+
+## Detailed examples
+
+A box to be used in examples:
+
+```{r}
+box_example <- function(...) {
+  tags$div(
+    style = "box-sizing:border-box;border:5px solid #1C6EA4;height:50px;",
+    ...
+  )
+}
+```
+
+
+
+### Automatic grid
+
+Default is to create as many columns as elements inside `grillade()`
+
+```{r}
+grillade(
+  box_example("Column 1"),
+  box_example("Column 2"),
+  box_example("Column 3"),
+  box_example("Column 4"),
+  box_example("Column 5")
+)
+```
+
+
+### Add gutter between columns
+
+Add a space between columns :
+
+```{r}
+grillade(
+  gutter = TRUE,
+  box_example("Column 1"),
+  box_example("Column 2"),
+  box_example("Column 3"),
+  box_example("Column 4"),
+  box_example("Column 5")
+)
+```
+
+Other possible values for `gutter` are `l` or `xl`.
+
+
+### Fixed number of columns
+
+You specify a number of columns, if the grillade have more elements than that, they will be on the next row :
+
+```{r}
+grillade(
+  n_col = 3,
+  box_example("Column 1"),
+  box_example("Column 2"),
+  box_example("Column 3"),
+  box_example("Column 4"),
+  box_example("Column 5")
+)
+```
+
+
+### Specific column's width
+
+There's two way to specify custom width for columns, directly in `grillade()`:
+
+```{r}
+grillade(
+  n_col = 5, 
+  cols_width = c(3, 2, NA, 3, "all"),
+  box_example("Column 1"),
+  box_example("Column 2"),
+  box_example("Column 3"),
+  box_example("Column 4"),
+  box_example("Column 5")
+)
+```
+
+Note that we defined `5` columns in our grid and first element have width `3`, so it will take 3/5 of the full width.
+
+`NA` correspond to a width of `1`.
+
+Second way to specify widths is using `knack()` to build grid's element:
+
+```{r}
+grillade(
+  n_col = 5, 
+  knack(
+    cols = 3,
+    box_example("Column 1")
+  ),
+  knack(
+    cols = 2,
+    box_example("Column 2")
+  ),
+  box_example("Column 3"),
+  knack(
+    cols = 3,
+    box_example("Column 4")
+  ),
+  knack(
+    cols = "all",
+    box_example("Column 5")
+  )
+)
+```
+
+
+### Specific row's height
+
+With `knack()` you can also provide row height:
+
+
+```{r}
+grillade(
+  n_col = 3,
+  knack(
+    rows = 2,
+    box_example("Column 1", style="height:100px;")
+  ),
+  box_example("Column 2"),
+  box_example("Column 3"),
+  knack(
+    cols = 2,
+    rows = 2,
+    box_example("Column 4", style="height:100px;")
+  ),
+  box_example("Column 5")
+)
+```
+
+
+### Responsive
+
+You can specify the number of columns taken for small size screen:
+
+```{r}
+grillade(
+  n_col = 5, 
+  n_col_sm = 2,
+  box_example("Column 1"),
+  box_example("Column 2"),
+  box_example("Column 3"),
+  box_example("Column 4"),
+  box_example("Column 5")
+)
+```
+
+Specify each columns width with small media:
+
+```{r}
+grillade(
+  n_col = 6,
+  knack(
+    cols = 2, cols_sm = 3,
+    box_example("Column 1")
+  ),
+  knack(
+    cols = 2, cols_sm = 3,
+    box_example("Column 2")
+  ),
+  knack(
+    cols = 2, cols_sm = 3,
+    box_example("Column 3")
+  ),
+  knack(
+    cols = 3, cols_sm = "all",
+    box_example("Column 4")
+  ),
+  knack(
+    cols = 3, cols_sm = "all",
+    box_example("Column 5")
+  )
+)
+```
+
+
+
+
+

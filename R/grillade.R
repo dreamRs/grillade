@@ -87,20 +87,20 @@ knack <- function(..., cols = NULL, cols_sm = NULL, rows = NULL) {
     )
   content <- list(...)
   if (any(nzchar(names(content)))) {
-    attributes <- content[nzchar(names(content))]
+    attribs <- content[nzchar(names(content))]
     content[nzchar(names(content))] <- NULL
   } else {
-    attributes <- NULL
+    attribs <- NULL
   }
-  coltag <- build_knack(
+  obj <- list(
     content = content,
     col_width = cols,
     col_width_sm = cols_sm,
-    row_height = rows
+    row_height = rows,
+    attribs = attribs
   )
-  coltag$attribs <- c(coltag$attribs, attributes)
-  class(coltag) <- c(class(coltag), "grillade-column")
-  return(coltag)
+  class(obj) <- c(class(obj), "knack")
+  return(obj)
 }
 
 
@@ -111,8 +111,9 @@ build_knack <- function(content,
                         col_width_sm = NULL,
                         row_height = NULL,
                         css_height = NULL,
-                        shiny = FALSE) {
-  tags$div(
+                        shiny = FALSE,
+                        attribs = NULL) {
+  knackTag <- tags$div(
     class = col_class(col_width, col_width_sm),
     class = row_class(row_height),
     class = "grillade-column",
@@ -132,6 +133,10 @@ build_knack <- function(content,
       }
     }
   )
+  if (!is.null(attribs)) {
+    knackTag$attribs <- c(knackTag$attribs, attribs)
+  }
+  return(knackTag)
 }
 
 
@@ -150,8 +155,16 @@ build_grillade <- function(x, knitr = FALSE, shiny = FALSE, default_height = "40
   content <- lapply(
     X = seq_along(content),
     FUN = function(i) {
-      if (inherits(content[[i]], "grillade-column")) {
-        coltag <- content[[i]]
+      if (inherits(content[[i]], "knack")) {
+        coltag <- build_knack(
+          content = content[[i]]$content,
+          col_width = content[[i]]$col_width,
+          col_width_sm = content[[i]]$col_width_sm,
+          css_height =  content[[i]]$css_height,
+          row_height = content[[i]]$row_height,
+          attribs = content[[i]]$attribs,
+          shiny = shiny
+        )
       } else {
         coltag <- build_knack(
           content = content[[i]],

@@ -16,6 +16,8 @@
 #' @name grillade-package
 #' @docType package
 #' @author Victor Perrier (@@dreamRs_fr)
+#'
+#' @example examples/examples.R
 NULL
 
 #' grillade exported operators and S3 methods

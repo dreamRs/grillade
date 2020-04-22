@@ -1,8 +1,10 @@
 
-#' Print method for grillade object
+#' Print method for grillade/knack objects
 #'
-#' @param x A \code{\link{grillade}} object.
+#' @param x A \code{\link{grillade}} or \code{\link{knack}} object.
 #' @param ... Additional arguments.
+#'
+#' @name print-methods
 #'
 #' @export
 #' @importFrom htmltools tags browsable tagAppendAttributes
@@ -20,6 +22,20 @@ print.grillade <- function(x, ...) {
     )
   )
   print(browsable(TAG))
+}
+
+#' @rdname print-methods
+#' @export
+print.knack <- function(x, ...) {
+  TAG <- build_knack(
+    content = x$content,
+    col_width = x$col_width,
+    col_width_sm = x$col_width_sm,
+    css_height =  x$css_height,
+    row_height = x$row_height,
+    attribs = x$attribs
+  )
+  print(TAG)
 }
 
 

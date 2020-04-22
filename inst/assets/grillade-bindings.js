@@ -13,6 +13,9 @@ $.extend(grilladeOutputBinding, {
     //$(el).find(".grillade-widget").height(data.outputHeight);
     //$(el).find(".html-widget").height(data.outputHeight);
     //$(el).find(".shiny-plot-output").height(data.outputHeight);
+    $(el).find(".shiny-plot-output").each(function() {
+      $(this).trigger( "resize" );
+    });
   }
 });
 Shiny.outputBindings.register(grilladeOutputBinding, "grillade.grilladeOutput");

@@ -2,12 +2,14 @@
 test_that("grid_class works", {
   expect_identical(grid_class(NULL), "autogrid")
   expect_identical(grid_class(3), "grid-3")
+  expect_identical(grid_class(4, 2), "grid-4-small-2")
 })
 
 
 test_that("col_class works", {
   expect_identical(col_class(NULL), NULL)
   expect_identical(col_class(3), "col-3")
+  expect_identical(col_class(4, 2), "col-4-small-2")
 })
 
 

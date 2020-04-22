@@ -4,12 +4,14 @@
 \alias{col}
 \title{Grillade column}
 \usage{
-col(..., col_width = NULL, row_height = NULL)
+col(..., col_width = NULL, col_width_sm = NULL, row_height = NULL)
 }
 \arguments{
 \item{...}{Content of the column, named arguments will be used as tag attributes.}
 
 \item{col_width}{Column width.}
+
+\item{col_width_sm}{Column width on small screen.}
 
 \item{row_height}{Row height.}
 }

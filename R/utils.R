@@ -1,14 +1,20 @@
 
-grid_class <- function(x) {
+grid_class <- function(x, small = NULL) {
   if (is.null(x))
     return("autogrid")
-  paste("grid", x, sep = "-")
+  x <- paste("grid", x, sep = "-")
+  if (!is.null(small))
+    x <- paste0(x, "-small-", small)
+  return(x)
 }
 
-col_class <- function(x) {
+col_class <- function(x, small = NULL) {
   if (is.null(x) || is.na(x))
     return(NULL)
-  paste("col", x, sep = "-")
+  x <- paste("col", x, sep = "-")
+  if (!is.null(small) && !is.na(small))
+    x <- paste0(x, "-small-", small)
+  return(x)
 }
 
 row_class <- function(x) {

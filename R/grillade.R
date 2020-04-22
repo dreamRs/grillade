@@ -6,10 +6,12 @@
 #' @param ... Elements to include in the \code{grillade}, must be HTML-like outputs.
 #' @param n_col Number of columns, default to \code{NULL}
 #'  and automatically display element with equal size in the grid.
+#' @param n_col_sm Number of columns with small screen.
 #' @param max_n_col Maximum number of columns, used if \code{n_col = NULL}
 #'  and number of elements is unknown.
 #' @param cols_width Numeric vector, numbers of columns taken by each elements,
 #'  can be a single number or a \code{vector} of same length as elements number.
+#' @param cols_width_sm Similar to \code{cols_width} but apply for small screens.
 #' @param gutter Add a gutter between columns, can be \code{TRUE}/\code{FALSE},
 #'  or \code{"l"} or \code{"xl"}.
 #' @param .list Alternative \code{list} of elements to include in the grid.
@@ -24,8 +26,10 @@
 #' @example examples/viewer-widget.R
 grillade <- function(...,
                      n_col = NULL,
+                     n_col_sm = NULL,
                      max_n_col = NULL,
                      cols_width = NULL,
+                     cols_width_sm = NULL,
                      gutter = FALSE,
                      .list = NULL) {
   stopifnot(is.numeric(n_col) | is.null(n_col))
@@ -35,6 +39,8 @@ grillade <- function(...,
   }
   if (!is.null(cols_width))
     cols_width <- rep_len(cols_width, length(content))
+  if (!is.null(cols_width_sm))
+    cols_width_sm <- rep_len(cols_width_sm, length(content))
 
   if (is_tag(content) | any(is_widgets(content))) {
     deps <- findDependencies(tagList(content))
@@ -47,8 +53,10 @@ grillade <- function(...,
     content = content,
     dependencies = deps,
     n_col = n_col,
+    n_col_sm = n_col_sm,
     max_n_col = max_n_col,
     cols_width = cols_width,
+    cols_width_sm = cols_width_sm,
     gutter = gutter
   )
   class(grll) <- "grillade"
@@ -61,13 +69,20 @@ grillade <- function(...,
 #'
 #' @param ... Content of the column, named arguments will be used as tag attributes.
 #' @param col_width Column width.
+#' @param col_width_sm Column width on small screen.
 #' @param row_height Row height.
 #'
 #' @return An element that can be used inside \code{\link{grillade}}.
 #' @export
 #'
 #' @example examples/ex-col.R
-col <- function(..., col_width = NULL, row_height = NULL) {
+col <- function(..., col_width = NULL, col_width_sm = NULL, row_height = NULL) {
+  if (!is.null(col_width_sm) & is.null(col_width))
+    stop(
+      "If providing col_width_sm (small screen size), ",
+      "you have to provide col_width (large screen size) too.",
+      call. = FALSE
+    )
   content <- list(...)
   if (any(nzchar(names(content)))) {
     attributes <- content[nzchar(names(content))]
@@ -75,7 +90,12 @@ col <- function(..., col_width = NULL, row_height = NULL) {
   } else {
     attributes <- NULL
   }
-  coltag <- build_col(content = content, col_width = col_width, row_height = row_height)
+  coltag <- build_col(
+    content = content,
+    col_width = col_width,
+    col_width_sm = col_width_sm,
+    row_height = row_height
+  )
   coltag$attribs <- c(coltag$attribs, attributes)
   class(coltag) <- c(class(coltag), "grillade-column")
   return(coltag)
@@ -83,9 +103,14 @@ col <- function(..., col_width = NULL, row_height = NULL) {
 
 
 
-build_col <- function(content, col_width = NULL, row_height = NULL, css_height = NULL, shiny = FALSE) {
+build_col <- function(content,
+                      col_width = NULL,
+                      col_width_sm = NULL,
+                      row_height = NULL,
+                      css_height = NULL,
+                      shiny = FALSE) {
   tags$div(
-    class = col_class(col_width),
+    class = col_class(col_width, col_width_sm),
     class = row_class(row_height),
     class = "grillade-column",
     class = if (is_widget(content)) "grillade-widget",
@@ -128,6 +153,7 @@ build_grillade <- function(x, knitr = FALSE, shiny = FALSE, default_height = "40
         coltag <- build_col(
           content = content[[i]],
           col_width = x$cols_width[i],
+          col_width_sm = x$cols_width_sm[i],
           css_height =  heights[i],
           shiny = shiny
         )
@@ -141,7 +167,7 @@ build_grillade <- function(x, knitr = FALSE, shiny = FALSE, default_height = "40
     n_col <- x$n_col
   }
   content <- tags$div(
-    class = grid_class(n_col),
+    class = grid_class(n_col, x$n_col_sm),
     class = gutter_class(x$gutter),
     style = if (!is.null(x$width))
       paste0("width:", validateCssUnit(x$width), ";"),

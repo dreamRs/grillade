@@ -11,7 +11,7 @@ box_example <- function(...) {
 # Number of row taken by grid element
 grillade(
   box_example("Column 1"),
-  col(
+  knack(
     row_height = 2,
     box_example("Column 2")
   ),
@@ -23,19 +23,19 @@ grillade(
 
 # Specify columns width
 grillade(
-  col(
+  knack(
     col_width = 3,
     box_example("Column 1")
   ),
-  col(
+  knack(
     col_width = 2,
     box_example("Column 2")
   ),
-  col(
+  knack(
     col_width = 2,
     box_example("Column 3")
   ),
-  col(
+  knack(
     col_width = 3,
     box_example("Column 4")
   ),

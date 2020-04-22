@@ -65,22 +65,24 @@ grillade <- function(...,
 
 
 
-#' Grillade column
+#' @title Grillade knack
+#'
+#' @description Custom elements for \code{\link{grillade}}.
 #'
 #' @param ... Content of the column, named arguments will be used as tag attributes.
-#' @param col_width Column width.
-#' @param col_width_sm Column width on small screen.
-#' @param row_height Row height.
+#' @param cols Number of column taken by the element.
+#' @param cols_sm Number of column taken by the element on small screen.
+#' @param rows Number of rows taken by the element.
 #'
 #' @return An element that can be used inside \code{\link{grillade}}.
 #' @export
 #'
-#' @example examples/ex-col.R
-col <- function(..., col_width = NULL, col_width_sm = NULL, row_height = NULL) {
-  if (!is.null(col_width_sm) & is.null(col_width))
+#' @example examples/ex-knack.R
+knack <- function(..., cols = NULL, cols_sm = NULL, rows = NULL) {
+  if (!is.null(cols_sm) & is.null(cols))
     stop(
-      "If providing col_width_sm (small screen size), ",
-      "you have to provide col_width (large screen size) too.",
+      "If providing cols_sm (small screen size), ",
+      "you have to provide cols (large screen size) too.",
       call. = FALSE
     )
   content <- list(...)
@@ -90,11 +92,11 @@ col <- function(..., col_width = NULL, col_width_sm = NULL, row_height = NULL) {
   } else {
     attributes <- NULL
   }
-  coltag <- build_col(
+  coltag <- build_knack(
     content = content,
-    col_width = col_width,
-    col_width_sm = col_width_sm,
-    row_height = row_height
+    col_width = cols,
+    col_width_sm = cols_sm,
+    row_height = rows
   )
   coltag$attribs <- c(coltag$attribs, attributes)
   class(coltag) <- c(class(coltag), "grillade-column")
@@ -102,13 +104,14 @@ col <- function(..., col_width = NULL, col_width_sm = NULL, row_height = NULL) {
 }
 
 
-
-build_col <- function(content,
-                      col_width = NULL,
-                      col_width_sm = NULL,
-                      row_height = NULL,
-                      css_height = NULL,
-                      shiny = FALSE) {
+#' @importFrom htmltools tags
+#' @importFrom shiny renderPlot
+build_knack <- function(content,
+                        col_width = NULL,
+                        col_width_sm = NULL,
+                        row_height = NULL,
+                        css_height = NULL,
+                        shiny = FALSE) {
   tags$div(
     class = col_class(col_width, col_width_sm),
     class = row_class(row_height),
@@ -132,7 +135,7 @@ build_col <- function(content,
 }
 
 
-#' @importFrom htmltools tags tagAppendAttributes attachDependencies
+#' @importFrom htmltools tags tagAppendAttributes attachDependencies validateCssUnit
 build_grillade <- function(x, knitr = FALSE, shiny = FALSE, default_height = "400px") {
   content <- x$content
 
@@ -150,7 +153,7 @@ build_grillade <- function(x, knitr = FALSE, shiny = FALSE, default_height = "40
       if (inherits(content[[i]], "grillade-column")) {
         coltag <- content[[i]]
       } else {
-        coltag <- build_col(
+        coltag <- build_knack(
           content = content[[i]],
           col_width = x$cols_width[i],
           col_width_sm = x$cols_width_sm[i],

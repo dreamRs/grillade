@@ -10,6 +10,21 @@ test_that("grillade works", {
 })
 
 
+test_that("grillade works with knack", {
+
+  grll <- grillade(knack(), knack())
+
+  expect_is(grll, "grillade")
+  expect_length(grll$content, 2)
+  expect_null(grll$dependencies)
+  expect_null(grll$n_col)
+
+  grll_b <- build_grillade(grll)
+  expect_is(grll_b, "shiny.tag")
+  expect_is(htmltools::findDependencies(grll_b), "list")
+})
+
+
 test_that("grillade works custom grid", {
 
   grll <- grillade(
@@ -54,5 +69,42 @@ test_that("build_grillade works", {
 })
 
 
+test_that("build_grillade works in shiny", {
+
+  grll <- grillade(ggplot2::ggplot(), htmltools::tags$div())
+  grll_b <- build_grillade(grll, shiny = TRUE)
+
+  expect_is(grll_b, "shiny.tag")
+  expect_is(htmltools::findDependencies(grll_b), "list")
+})
 
 
+test_that("knack works", {
+
+  knk <- knack(htmltools::tags$div(), style = "style", cols = 2, rows = 3, cols_sm = 1)
+
+  expect_is(knk, "knack")
+  expect_length(knk$content, 1)
+  expect_identical(knk$col_width, 2)
+  expect_identical(knk$row_height, 3)
+  expect_identical(knk$col_width_sm, 1)
+  expect_is(knk$attribs, "list")
+
+
+  expect_error(knack(cols_sm = 2))
+})
+
+test_that("build_knack works", {
+
+  knackTag <- build_knack(
+    content = htmltools::tags$div(),
+    col_width = 2,
+    col_width_sm = NULL,
+    css_height =  NULL,
+    row_height = 3,
+    attribs = NULL,
+    shiny = FALSE
+  )
+
+  expect_is(knackTag, "shiny.tag")
+})

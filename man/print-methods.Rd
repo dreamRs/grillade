@@ -6,12 +6,14 @@
 \alias{print.knack}
 \title{Print method for grillade/knack objects}
 \usage{
-\method{print}{grillade}(x, ...)
+\method{print}{grillade}(x, browsable = TRUE, ...)
 
 \method{print}{knack}(x, ...)
 }
 \arguments{
 \item{x}{A \code{\link{grillade}} or \code{\link{knack}} object.}
+
+\item{browsable}{Make the result browsable.}
 
 \item{...}{Additional arguments.}
 }

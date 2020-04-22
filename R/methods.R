@@ -2,6 +2,7 @@
 #' Print method for grillade/knack objects
 #'
 #' @param x A \code{\link{grillade}} or \code{\link{knack}} object.
+#' @param browsable Make the result browsable.
 #' @param ... Additional arguments.
 #'
 #' @name print-methods
@@ -9,7 +10,7 @@
 #' @export
 #' @importFrom htmltools tags browsable tagAppendAttributes
 #'
-print.grillade <- function(x, ...) {
+print.grillade <- function(x, browsable = TRUE, ...) {
   TAG <- tags$html(
     style = "width: 100%; height: 100%;",
     tags$body(
@@ -21,7 +22,7 @@ print.grillade <- function(x, ...) {
       )
     )
   )
-  print(browsable(TAG))
+  print(browsable(TAG, value = browsable))
 }
 
 #' @rdname print-methods

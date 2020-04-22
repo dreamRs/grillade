@@ -19,3 +19,8 @@ test_that("gutter_class works", {
   expect_identical(gutter_class("xl"), "has-gutter-xl")
   expect_identical(gutter_class("aaa"), NULL)
 })
+
+
+test_that("makeRender works", {
+  expect_is(makeRender(apexcharter::apexchart())(), "json")
+})

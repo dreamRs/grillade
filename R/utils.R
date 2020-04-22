@@ -128,7 +128,7 @@ get_heights <- function(x, knitr = FALSE) {
 # From vignette('knit_print', package = 'knitr')
 # and https://github.com/rstudio/htmltools/pull/108/files
 
-register_s3_method <- function(pkg, generic, class, fun = NULL) {
+register_s3_method <- function(pkg, generic, class, fun = NULL) { # nocov start
   stopifnot(is.character(pkg), length(pkg) == 1)
   stopifnot(is.character(generic), length(generic) == 1)
   stopifnot(is.character(class), length(class) == 1)
@@ -150,4 +150,4 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
       registerS3method(generic, class, fun, envir = asNamespace(pkg))
     }
   )
-}
+} # nocov end

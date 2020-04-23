@@ -109,6 +109,8 @@ get_height <- function(x, knitr = FALSE) {
     if (isTRUE(knitr) & !is.null(x$sizingPolicy$knitr$defaultHeight))
       return(x$sizingPolicy$knitr$defaultHeight)
     return(NA_character_)
+  } else if (inherits(x, "knack") && length(x$content) > 0) {
+    get_height(x$content[[1]], knitr = knitr)
   } else {
     return(NA_character_)
   }

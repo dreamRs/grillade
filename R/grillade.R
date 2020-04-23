@@ -160,7 +160,7 @@ build_grillade <- function(x, knitr = FALSE, shiny = FALSE, default_height = "40
           content = content[[i]]$content,
           col_width = content[[i]]$col_width,
           col_width_sm = content[[i]]$col_width_sm,
-          css_height =  content[[i]]$css_height,
+          css_height = heights[i],
           row_height = content[[i]]$row_height,
           attribs = content[[i]]$attribs,
           shiny = shiny
@@ -170,7 +170,7 @@ build_grillade <- function(x, knitr = FALSE, shiny = FALSE, default_height = "40
           content = content[[i]],
           col_width = x$cols_width[i],
           col_width_sm = x$cols_width_sm[i],
-          css_height =  heights[i],
+          css_height = heights[i],
           shiny = shiny
         )
       }

@@ -30,11 +30,11 @@ grillade(
   n_col = 2,
   knack(
     cols = 1, cols_sm = "all",
-    apex(eco, aes(x = date, y = uempmed), "line", height = "350px")
+    apex(eco, aes(x = date, y = uempmed), "line")
   ),
   knack(
     cols = 1, cols_sm = "all",
-    apex(eco, aes(x = date, y = psavert), "line", height = "350px")
+    apex(eco, aes(x = date, y = psavert), "line")
   )
 )
 ```

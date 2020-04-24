@@ -40,7 +40,13 @@ is_shiny <- function() {
 }
 
 is_widget <- function(x) {
-  inherits(x, "htmlwidget")
+  if (inherits(x, "htmlwidget")) {
+    return(TRUE)
+  } else if (is.list(x)) {
+    any(unlist(lapply(x, is_widget)))
+  } else {
+    return(FALSE)
+  }
 }
 # extract2 <- function(x, nm) {
 #   `[[`(x, nm)

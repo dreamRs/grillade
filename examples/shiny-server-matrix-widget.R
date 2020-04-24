@@ -40,7 +40,7 @@ server <- function(input, output, session) {
     apex(
       data = data,
       mapping = aes(x = date, y = !!sym(variable)),
-      type = "line", elementId = variable
+      type = "line"
     )
   }
 

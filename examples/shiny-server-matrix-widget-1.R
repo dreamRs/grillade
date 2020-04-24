@@ -15,7 +15,7 @@ server <- function(input, output, session) {
   make_chart <- function(data, variable) {
     apex(
       data = data,
-      mapping = aes(x = date, y = !!sym(variable)),
+      mapping = aes(x = date, y = !!rlang::sym(variable)),
       type = "line"
     )
   }

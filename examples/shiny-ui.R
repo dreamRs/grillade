@@ -55,8 +55,9 @@ ui <- fluidPage(
     wellPanel("Column 4 (take 2)", style = "text-align: center;"),
     wellPanel("Column 5", style = "text-align: center;")
   ),
-  tags$b("Nested"),
+  tags$b("Nested grillade, gutter only at first level"),
   grillade(
+    gutter = TRUE,
     grillade(
       wellPanel("Column A 1", style = "text-align: center;"),
       wellPanel("Column A 2", style = "text-align: center;")
